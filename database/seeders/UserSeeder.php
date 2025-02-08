@@ -20,38 +20,37 @@ class UserSeeder extends Seeder
         DB::table('users')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // assignation des roles -> revoir les appellations 
-        // //admin
-        // User::factory()->create([
-        //     'name' => 'Doja Cat',
-        //     'email' => 'doja@cat.us',
-        // ]);
-        // $doja = User::where('name', '=', 'Doja Cat')->first();
-        // $doja->assignRole('admin');
+        //admin
+        User::factory()->create([
+            'name' => 'Doja Cat',
+            'email' => 'doja@cat.us',
+        ]);
+        $doja = User::where('name', '=', 'Doja Cat')->first();
+        $doja->assignRole('admin');
 
-        // //superviseur
-        // User::factory()->create([
-        //     'name' => 'Ariana Grande',
-        //     'email' => 'ariana@grande.us',
-        // ]);
-        // $ariana = User::where('name', '=', 'Ariana Grande')->first();
-        // $ariana->assignRole('supervisor');
+        //supervisor
+        User::factory()->create([
+            'name' => 'Ariana Grande',
+            'email' => 'ariana@grande.us',
+        ]);
+        $ariana = User::where('name', '=', 'Ariana Grande')->first();
+        $ariana->assignRole('supervisor');
 
-        // //marchant
-        // User::factory()->create([
-        //     'name' => 'Cardi B',
-        //     'email' => 'cardi@b.us',
-        // ]);
-        // $cardi = User::where('name', '=', 'Cardi B')->first();
-        // $cardi->assignRole('seller');
+        //seller
+        User::factory()->create([
+            'name' => 'Cardi B',
+            'email' => 'cardi@b.us',
+        ]);
+        $cardi = User::where('name', '=', 'Cardi B')->first();
+        $cardi->assignRole('seller');
 
-        // //client
-        // User::factory()->create([
-        //     'name' => 'Flo Milli',
-        //     'email' => 'flo@milli.us',
-        // ]);
-        // $flo = User::where('name', '=', 'Flo Milli');
-        // $flo->assignRole('client');
+        //client
+        User::factory()->create([
+            'name' => 'Flo Milli',
+            'email' => 'flo@milli.us',
+        ]);
+        $flo = User::where('name', '=', 'Flo Milli');
+        $flo->assignRole('client');
 
         User::factory()->count(10)->create();
     }
