@@ -14,7 +14,6 @@ if(isset($_POST['login']) && isset($_POST['password'])){
 
 
 
-    return "coucou";
 
 
 
@@ -23,11 +22,15 @@ if(isset($_POST['login']) && isset($_POST['password'])){
 
 
     http_response_code(200);
+
+    echo "coucou";
+
+
 }else{
 
 
 
-http_response_code(200);
+http_response_code(400);
 }
 
 
