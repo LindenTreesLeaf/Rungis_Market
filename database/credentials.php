@@ -1,10 +1,10 @@
 <?php
 
 
-define('dblogin', 'phpmyadmin');
-define('password', '');
-define('servername', 'localhost');
-define('database','info0403');
+$dblogin = "phpmyadmin";
+$password = "";
+$servername = "localhost";
+$database = "info0406";
 
 
 
