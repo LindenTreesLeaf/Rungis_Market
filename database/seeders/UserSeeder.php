@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
             'name' => 'Flo Milli',
             'email' => 'flo@milli.us',
         ]);
-        $flo = User::where('name', '=', 'Flo Milli');
+        $flo = User::where('name', '=', 'Flo Milli')->first();
         $flo->assignRole('client');
 
         User::factory()->count(10)->create();
