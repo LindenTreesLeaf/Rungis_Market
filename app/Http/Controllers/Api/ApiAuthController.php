@@ -14,7 +14,9 @@ class ApiAuthController extends Controller {
         $request->session()->regenerate();
 
 
-        return $request->cookie("laravel_session");
+        $out = ['token' => $request->session()->id()];
+
+        return response()->json($out);
 
     }
 }
