@@ -11,10 +11,24 @@ class ApiAuthController extends Controller {
     public function store(LoginRequest $request){
 
         $request->authenticate();
-        $request->session()->regenerate();
+        
+        $request->get('email');
+
+        $userId = DB::table('users')
+                ->select('id')
+                ->where('email',$request->get('email'))
+                ->get();
 
 
-        $out = ['token' => $request->session()->id()];
+
+        
+
+        $token = str_random(64);
+
+
+
+
+        $out = ['token' => $userId];
 
 
 
