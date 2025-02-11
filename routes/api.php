@@ -8,5 +8,5 @@ use App\Http\Controllers\Api\ApiDataController;
 
 Route::middleware('api')->group(function () {
     Route::post('/api/login',[ApiAuthController::class, 'store']);
-    Route::post('/api/data/bundles', [ApiDataController::class,'getBundles']);
+    Route::post('/api/data/orders', [ApiDataController::class,'getOrders']);
 });
