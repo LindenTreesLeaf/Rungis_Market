@@ -16,6 +16,10 @@ class ApiAuthController extends Controller {
 
         $out = ['token' => $request->session()->id()];
 
+
+
+
+        //return $request->session->id();
         return response()->json($out);
 
     }
