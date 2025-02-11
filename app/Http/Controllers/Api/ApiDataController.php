@@ -9,12 +9,20 @@ use Illuminate\Support\Facades\DB;
 class ApiDataController extends Controller {
     public function getBundles(Request $request){
 
-        if($request->has('token') && $request->session()->id() == $request->input('token')){
+        if($request->has('token')){
             
-            $data =  DB::select('SELECT * FROM bundles');
+
+            $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
+
+
             
-            $out = ['error' => 0, 'data' => $data];   
+
+            //$data =  DB::select('SELECT * FROM bundles');
+            
+            $out = ['error' => 0, 'data' => $tokenExist];   
             return $out;
+        
+        
         }else{
             $out = ['error' => 1, 'data'=> [$request->session()->id()]];
             return $out;

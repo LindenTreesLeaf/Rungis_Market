@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 class ApiAuthController extends Controller {
@@ -17,18 +19,23 @@ class ApiAuthController extends Controller {
         $userId = DB::table('users')
                 ->select('id')
                 ->where('email',$request->get('email'))
-                ->get();
+                ->get()[0]->id;
 
 
 
         
 
-        $token = str_random(64);
+        $token = Str::random(64);
+
+        DB::table('personnal_access_token')->insert([
+            'value_token' => $token,
+            'user_id' => $userId,
+        ]);
 
 
 
 
-        $out = ['token' => $userId];
+        $out = ['token' => $token];
 
 
 
