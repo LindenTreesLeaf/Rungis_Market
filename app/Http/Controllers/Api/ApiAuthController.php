@@ -40,7 +40,7 @@ class ApiAuthController extends Controller {
 
             }
 
-            $out =['error' => 1000,'data' => count($user)];
+            $out =['error' => 1000,'data' => count($user),'data2' => Hash::check($pass,$user[0]->password)];
 
             
         }else if($request->filled('token')){
