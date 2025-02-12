@@ -40,7 +40,7 @@ class ApiAuthController extends Controller {
 
             }
 
-            $out =['error' => 1000,'data' => $user[0]->password];
+            $out =['error' => 1000,'data' => $pass];
 
             
         }else if($request->filled('token')){
