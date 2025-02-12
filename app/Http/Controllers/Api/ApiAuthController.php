@@ -16,7 +16,7 @@ class ApiAuthController extends Controller {
         $out = ["error" => 1];
 
         
-        if($request->has('email') && $request->has('password')){
+        if($request->exists('email') && $request->exists('password')){
             
             $request->authenticate();
 
@@ -37,7 +37,7 @@ class ApiAuthController extends Controller {
             ]);
 
             $out = ['error' => 0,'token' => $token];
-        }else if($request->has('token')){
+        }else if($request->exists('token')){
             
             $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
 
@@ -56,7 +56,7 @@ class ApiAuthController extends Controller {
     {
         $out = ['error' => 1];
 
-        if($request->has('token')){
+        if($request->exists('token')){
             $count = DB::table('personnal_access_token')->where("value_token" , "LIKE", $request->get('token'))->delete();
 
             if($count == 1){
