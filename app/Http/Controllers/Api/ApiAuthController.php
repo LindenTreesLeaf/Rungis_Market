@@ -12,36 +12,55 @@ class ApiAuthController extends Controller {
 
     public function store(LoginRequest $request){
 
-        $request->authenticate();
-        
-        $request->get('email');
-
-        $userId = DB::table('users')
-                ->select('id')
-                ->where('email',$request->get('email'))
-                ->get()[0]->id;
-
-
+        $out = ["error" => 1];
 
         
+        if($request->has('email') && $request->has('password')){
+            
+            $request->authenticate();
 
-        $token = Str::random(64);
-
-        DB::table('personnal_access_token')->insert([
-            'value_token' => $token,
-            'user_id' => $userId,
-        ]);
-
-
-
-
-        $out = ['token' => $token];
+            $userId = DB::table('users')
+            ->select('id')
+            ->where('email',$request->get('email'))
+            ->get()[0]->id;
 
 
 
+    
 
-        //return $request->session->id();
+            $token = Str::random(64);
+
+            DB::table('personnal_access_token')->insert([
+                'value_token' => $token,
+                'user_id' => $userId,
+            ]);
+
+            $out = ['error' => 0,'token' => $token];
+        }else if($request->has('token')){
+            
+            $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
+
+
+            if(count($tokenExist) == 1){
+                $out = ["error" => 0];
+            }
+
+        }
+
         return response()->json($out);
 
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $out = ['error' => 1];
+
+        if($request->has('token')){
+            DB::table('personnal_access_token')->where("value_token" , "=", "$request->get('token')")->delete();
+
+            $out = ['error' => 0];
+        }
+
+        return response()->json($out);
     }
 }
