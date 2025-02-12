@@ -52,7 +52,7 @@ class ApiAuthController extends Controller {
 
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         $out = ['error' => 1];
 
