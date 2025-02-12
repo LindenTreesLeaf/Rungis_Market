@@ -65,6 +65,8 @@ class ApiAuthController extends Controller {
                 $out = ['error' => 2]; 
             }
 
+            $out = ['error' => $count];
+
             
         }
 
