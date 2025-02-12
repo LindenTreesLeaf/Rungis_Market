@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 
 class ApiAuthController extends Controller {
@@ -35,9 +36,11 @@ class ApiAuthController extends Controller {
                 'user_id' => $userId,
                 ]);
 
-                $out = ['error' => 100,'token' => $token];
+                $out = ['error' => 0,'token' => $token];
 
             }
+
+            $out =['error' => 1000];
 
             
         }else if($request->filled('token')){
