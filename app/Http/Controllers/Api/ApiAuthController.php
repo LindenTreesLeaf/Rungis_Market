@@ -57,9 +57,15 @@ class ApiAuthController extends Controller {
         $out = ['error' => 1];
 
         if($request->has('token')){
-            DB::table('personnal_access_token')->where("value_token" , "=", "$request->get('token')")->delete();
+            $count = DB::table('personnal_access_token')->where("value_token" , "=", "$request->get('token')")->delete();
 
-            $out = ['error' => 0];
+            if($count == 1){
+                $out = ['error' => 0];
+            }else if($count > 1){
+                $out = ['error' => 2]; 
+            }
+
+            
         }
 
         return response()->json($out);
