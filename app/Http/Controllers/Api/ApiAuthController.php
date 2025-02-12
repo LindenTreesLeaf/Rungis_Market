@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -11,33 +10,37 @@ use Illuminate\Support\Str;
 
 class ApiAuthController extends Controller {
 
-    public function store(LoginRequest $request){
+    public function store(Request $request){
 
-        $out = ["error" => 1];
+        $out = ["error" => 1]; // a faire, ne plus passer par la login request, mais m'occuper de vérifier que l'utilisateur est le bon.
 
         
-        if($request->exists('email') && $request->exists('password')){
+        if($request->filled('email') && $request->filled('password')){
             
-            $request->authenticate();
+            $email = $request->get('email');
 
-            $userId = DB::table('users')
-            ->select('id')
-            ->where('email',$request->get('email'))
-            ->get()[0]->id;
+            $pass = $request->get('password');
 
 
+            $user = DB::table('users')->where('email',$email)->get();
+            
 
-    
+            if(count($user) == 1 && Hash::check($pass,$user[0]->password)){
+                $userId = $user[0]->id;
 
-            $token = Str::random(64);
+                $token = Str::random(64);
 
-            DB::table('personnal_access_token')->insert([
+                DB::table('personnal_access_token')->insert([
                 'value_token' => $token,
                 'user_id' => $userId,
-            ]);
+                ]);
 
-            $out = ['error' => 0,'token' => $token];
-        }else if($request->exists('token')){
+                $out = ['error' => 100,'token' => $token];
+
+            }
+
+            
+        }else if($request->filled('token')){
             
             $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
 
