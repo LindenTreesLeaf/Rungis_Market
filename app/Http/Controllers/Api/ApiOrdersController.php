@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order;
 
-class ApiDataController extends Controller {
+class ApiOrdersController extends Controller {
     public function getOrders(Request $request){
 
         if($request->has('token')){
@@ -16,8 +17,9 @@ class ApiDataController extends Controller {
 
 
             if(count($tokenExist) == 1){
+
                 
-                $data =  DB::table('orders')->where('user_id','=',$tokenExist[0]->user_id)->get();
+                $data =  Order::where('orders.user_id','=',$tokenExist[0]->user_id)->join("states", "states.id","=", "orders.state_id")->get()  ;
 
 
 
@@ -37,4 +39,10 @@ class ApiDataController extends Controller {
 
 
     }
+
+
+
+
+
+
 }
