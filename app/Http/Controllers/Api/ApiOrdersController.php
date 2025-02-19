@@ -19,7 +19,11 @@ class ApiOrdersController extends Controller {
             if(count($tokenExist) == 1){
 
                 
-                $data =  Order::where('orders.user_id','=',$tokenExist[0]->user_id)->join("states", "states.id","=", "orders.state_id")->get()  ;
+                $data =  Order::select("*",DB::raw("orders.id as ordid"))
+                            ->where('orders.user_id','=',$tokenExist[0]->user_id)
+                            ->join("states", "states.id","=", "orders.state_id")
+                            ->orderBy('date_passed','DESC')
+                            ->get();
 
 
 
