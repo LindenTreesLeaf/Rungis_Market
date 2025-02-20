@@ -19,15 +19,15 @@ class UnitSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         DB::table('units')->insert([
-            'name' => "kg",
+            'name_u' => "kg",
         ]);
 
         DB::table('units')->insert([
-            'name' => "g",
+            'name_u' => "g",
         ]);
 
         DB::table('units')->insert([
-            'name' => "L",
+            'name_u' => "L",
         ]);
     }
 }
