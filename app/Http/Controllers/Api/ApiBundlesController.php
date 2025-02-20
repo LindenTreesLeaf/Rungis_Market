@@ -28,8 +28,7 @@ class ApiBundlesController extends Controller {
                 //             ->orderBy('date_passed','DESC')
                 //             ->get();
 
-
-                $data = Bundle::select("product,quantity,")
+                $data = Bundle::select("quantity","product","price","name_u","name","email")
                                 ->where('bundles.order_id','=',$request->get("orderid"))
                                 ->join("units","units.id","=","bundles.unit_id")
                                 ->join("users","users.id", "=", "bundles.user_id")

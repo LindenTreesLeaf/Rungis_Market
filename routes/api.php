@@ -12,4 +12,5 @@ Route::middleware('api')->group(function () {
     Route::post('/api/orders', [ApiOrdersController::class,'getOrders']);
     Route::delete('/api/logout',[ApiAuthController::class, 'destroy']);
     Route::post('api/orders/bundles',[ApiBundlesController::class, 'getOrdersBundles']);
+    Route::post('api/orders/update',[ApiOrdersController::class, 'validateOrder']);
 });
