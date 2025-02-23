@@ -33,7 +33,7 @@ class BundleController extends Controller
 
     public function show(Bundle $bundle)
     {
-        return view('bundles.show', compact('bundle'));
+        return view('bundles.show',  ['bundle' => $bundle]);
     }
 
     public function edit(Bundle $bundle)
