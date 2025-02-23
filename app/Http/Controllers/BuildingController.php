@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Building;
-use Illuminate\Support\Facades\Gatphp e;
+use Illuminate\Support\Facades\Gate;
 
 class BuildingController extends Controller
 {

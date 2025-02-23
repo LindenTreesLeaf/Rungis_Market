@@ -7,12 +7,6 @@ use App\Models\Bundle;
 
 class Unit extends Model
 {
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

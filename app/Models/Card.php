@@ -8,12 +8,6 @@ use App\Models\User;
 
 class Card extends Model
 {
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
