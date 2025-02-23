@@ -44,7 +44,7 @@ class ConditionController extends Controller
 
     public function edit(Condition $condition)
     {
-        if (Gate::denies('edit condition')) {
+        if (Gate::denies('update condition')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette condition.");
         }
         return view('conditions.edit', compact('condition'));
@@ -52,7 +52,7 @@ class ConditionController extends Controller
 
     public function update(Request $request, Condition $condition)
     {
-        if (Gate::denies('edit condition')) {
+        if (Gate::denies('update condition')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette condition.");
         }
         $condition->update($request->all());

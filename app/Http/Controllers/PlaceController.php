@@ -44,7 +44,7 @@ class PlaceController extends Controller
 
     public function edit(Place $place)
     {
-        if (Gate::denies('edit place')) {
+        if (Gate::denies('update place')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce lieu.");
         }
         return view('places.edit', compact('place'));
@@ -52,7 +52,7 @@ class PlaceController extends Controller
 
     public function update(Request $request, Place $place)
     {
-        if (Gate::denies('edit place')) {
+        if (Gate::denies('update place')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce lieu.");
         }
         $place->update($request->all());

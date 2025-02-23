@@ -11,7 +11,8 @@ class CardController extends Controller
 {
     public function index()
     {
-        // Ajoutez ici la logique pour afficher toutes les cartes si nécessaire
+        $cards = Card::all();
+        return view('cards.index', compact('cards'));
     }
 
     public function create()
@@ -38,7 +39,7 @@ class CardController extends Controller
 
     public function edit(Card $card)
     {
-        if (Gate::denies('edit card')) {
+        if (Gate::denies('update card')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette carte.");
         }
         return view('cards.edit', compact('card'));
@@ -46,7 +47,7 @@ class CardController extends Controller
 
     public function update(Request $request, Card $card)
     {
-        if (Gate::denies('edit card')) {
+        if (Gate::denies('update card')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette carte.");
         }
         $card->update($request->all());

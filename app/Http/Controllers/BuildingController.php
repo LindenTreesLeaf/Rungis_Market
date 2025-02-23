@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Building;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gatphp e;
 
 class BuildingController extends Controller
 {
@@ -38,7 +38,7 @@ class BuildingController extends Controller
 
     public function edit(Building $building)
     {
-        if (Gate::denies('edit building')) {
+        if (Gate::denies('update building')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bâtiment.");
         }
         return view('buildings.edit', compact('building'));
@@ -46,7 +46,7 @@ class BuildingController extends Controller
 
     public function update(Request $request, Building $building)
     {
-        if (Gate::denies('edit building')) {
+        if (Gate::denies('update building')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bâtiment.");
         }
         $building->update($request->all());

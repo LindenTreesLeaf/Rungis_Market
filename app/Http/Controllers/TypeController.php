@@ -10,7 +10,11 @@ class TypeController extends Controller
 {
     public function index()
     {
-        // Ajoutez ici la logique pour afficher tous les types si nécessaire
+        if (Gate::denies('see types')) {
+            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir les types.");
+        }
+        $types = Type::all();
+        return view('types.index', compact('types'));
     }
 
     public function create()
@@ -37,7 +41,7 @@ class TypeController extends Controller
 
     public function edit(Type $type)
     {
-        if (Gate::denies('edit type')) {
+        if (Gate::denies('update type')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce type.");
         }
         return view('types.edit', compact('type'));
@@ -45,7 +49,7 @@ class TypeController extends Controller
 
     public function update(Request $request, Type $type)
     {
-        if (Gate::denies('edit type')) {
+        if (Gate::denies('update type')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce type.");
         }
         $type->update($request->all());

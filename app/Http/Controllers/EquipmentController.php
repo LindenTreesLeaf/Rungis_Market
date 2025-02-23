@@ -44,7 +44,7 @@ class EquipmentController extends Controller
 
     public function edit(Equipment $equipment)
     {
-        if (Gate::denies('edit equipment')) {
+        if (Gate::denies('update equipment')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cet équipement.");
         }
         return view('equipment.edit', compact('equipment'));
@@ -52,7 +52,7 @@ class EquipmentController extends Controller
 
     public function update(Request $request, Equipment $equipment)
     {
-        if (Gate::denies('edit equipment')) {
+        if (Gate::denies('update equipment')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cet équipement.");
         }
         $equipment->update($request->all());

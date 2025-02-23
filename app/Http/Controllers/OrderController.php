@@ -44,7 +44,7 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
-        if (Gate::denies('edit order')) {
+        if (Gate::denies('update order')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette commande.");
         }
         return view('orders.edit', compact('order'));
@@ -52,7 +52,7 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        if (Gate::denies('edit order')) {
+        if (Gate::denies('update order')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette commande.");
         }
         $order->update($request->all());

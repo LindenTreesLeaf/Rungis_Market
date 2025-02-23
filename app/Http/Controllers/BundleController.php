@@ -10,7 +10,8 @@ class BundleController extends Controller
 {
     public function index()
     {
-        // Ajoutez ici la logique pour afficher tous les bundles si nécessaire
+        $bundles = Bundle::all();
+        return view('bundles.index', compact('bundles'));
     }
 
     public function create()
@@ -37,7 +38,7 @@ class BundleController extends Controller
 
     public function edit(Bundle $bundle)
     {
-        if (Gate::denies('edit bundle')) {
+        if (Gate::denies('update bundle')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bundle.");
         }
         return view('bundles.edit', compact('bundle'));
@@ -45,7 +46,7 @@ class BundleController extends Controller
 
     public function update(Request $request, Bundle $bundle)
     {
-        if (Gate::denies('edit bundle')) {
+        if (Gate::denies('update bundle')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bundle.");
         }
         $bundle->update($request->all());
