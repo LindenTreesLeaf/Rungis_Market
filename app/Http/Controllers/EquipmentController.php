@@ -10,60 +10,44 @@ class EquipmentController extends Controller
 {
     public function index()
     {
-        if (Gate::denies('see equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir les équipements.");
-        }
+        $this->authorize('viewAny', Equipment::class);
         $equipment = Equipment::all();
         return view('equipment.index', compact('equipment'));
     }
 
     public function create()
     {
-        if (Gate::denies('create equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un équipement.");
-        }
+        $this->authorize('create', Equipment::class);
         return view('equipment.create');
     }
 
     public function store(Request $request)
     {
-        if (Gate::denies('create equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un équipement.");
-        }
         $equipment = Equipment::create($request->all());
         return redirect()->route('equipment.show', ['equipment' => $equipment]);
     }
 
     public function show(Equipment $equipment)
     {
-        if (Gate::denies('see equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir cet équipement.");
-        }
+        $this->authorize('view', $equipment);
         return view('equipment.show', compact('equipment'));
     }
 
     public function edit(Equipment $equipment)
     {
-        if (Gate::denies('update equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cet équipement.");
-        }
+        $this->authorize('update', $equipment);
         return view('equipment.edit', compact('equipment'));
     }
 
     public function update(Request $request, Equipment $equipment)
     {
-        if (Gate::denies('update equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cet équipement.");
-        }
         $equipment->update($request->all());
         return redirect()->route('equipment.show', ['equipment' => $equipment]);
     }
 
     public function destroy(Equipment $equipment)
     {
-        if (Gate::denies('delete equipment')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de supprimer cet équipement.");
-        }
+        $this->authorize('delete', $equipment);
         $equipment->delete();
         return redirect()->route('equipment.index')->with('success', "Équipement supprimé avec succès.");
     }
