@@ -10,54 +10,48 @@ class BundleController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Bundle::class);
         $bundles = Bundle::all();
         return view('bundles.index', compact('bundles'));
     }
 
     public function create()
     {
-        if (Gate::denies('create bundle')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un bundle.");
-        }
+        $this->authorize('create', Bundle::class);
         return view('bundles.create');
     }
 
     public function store(Request $request)
     {
-        if (Gate::denies('create bundle')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un bundle.");
-        }
         $bundle = Bundle::create($request->all());
         return redirect()->route('bundles.show', ['bundle' => $bundle]);
     }
 
     public function show(Bundle $bundle)
     {
+<<<<<<< HEAD
         return view('bundles.show',  ['bundle' => $bundle]);
+=======
+        $this->authorize('view', $bundle);
+        return view('bundles.show', compact('bundle'));
+>>>>>>> origin/main
     }
 
     public function edit(Bundle $bundle)
     {
-        if (Gate::denies('update bundle')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bundle.");
-        }
+        $this->authorize('update', $bundle);
         return view('bundles.edit', compact('bundle'));
     }
 
     public function update(Request $request, Bundle $bundle)
     {
-        if (Gate::denies('update bundle')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bundle.");
-        }
         $bundle->update($request->all());
         return redirect()->route('bundles.show', ['bundle' => $bundle]);
     }
 
     public function destroy(Bundle $bundle)
     {
-        if (Gate::denies('delete bundle')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de supprimer ce bundle.");
-        }
+        $this->authorize('delete', $bundle);
         $bundle->delete();
         return redirect()->route('bundles.index')->with('success', "Bundle supprimé avec succès.");
     }
