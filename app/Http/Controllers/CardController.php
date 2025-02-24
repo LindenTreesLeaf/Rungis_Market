@@ -24,7 +24,7 @@ class CardController extends Controller
 
     public function store(Request $request)
     {
-        $card = Card::create($request->all());
+        $card = Card::create($request->validated());
         return redirect()->route('cards.show', ['card' => $card]);
     }
 
@@ -42,7 +42,7 @@ class CardController extends Controller
 
     public function update(Request $request, Card $card)
     {
-        $card->update($request->all());
+        $card->update($request->validated());
         return redirect()->route('cards.show', ['card' => $card]);
     }
 

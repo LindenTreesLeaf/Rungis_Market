@@ -11,7 +11,7 @@ class PlaceController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Place::class);
-        $places = Place::all();
+        $places = Place::validated();
         return view('places.index', compact('places'));
     }
 
@@ -26,7 +26,7 @@ class PlaceController extends Controller
         if (Gate::denies('create place')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un lieu.");
         }
-        $place = Place::create($request->all());
+        $place = Place::create($request->validated());
         return redirect()->route('places.show', ['place' => $place]);
     }
 
@@ -44,7 +44,7 @@ class PlaceController extends Controller
 
     public function update(Request $request, Place $place)
     {
-        $place->update($request->all());
+        $place->update($request->validated());
         return redirect()->route('places.show', ['place' => $place]);
     }
 

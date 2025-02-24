@@ -23,7 +23,7 @@ class BuildingController extends Controller
 
     public function store(Request $request)
     {
-        $building = Building::create($request->all());
+        $building = Building::create($request->validated());
         return redirect()->route('buildings.show', ['building' => $building]);
     }
 
@@ -41,7 +41,7 @@ class BuildingController extends Controller
 
     public function update(Request $request, Building $building)
     {
-        $building->update($request->all());
+        $building->update($request->validated());
         return redirect()->route('buildings.show', ['building' => $building]);
     }
 

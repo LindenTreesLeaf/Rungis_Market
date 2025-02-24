@@ -11,7 +11,7 @@ class TypeController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Type::class);
-        $types = Type::all();
+        $types = Type::validated();
         return view('types.index', compact('types'));
     }
 
@@ -23,7 +23,7 @@ class TypeController extends Controller
 
     public function store(Request $request)
     {
-        $type = Type::create($request->all());
+        $type = Type::create($request->validated());
         return redirect()->route('types.show', ['type' => $type]);
     }
 
@@ -41,7 +41,7 @@ class TypeController extends Controller
 
     public function update(Request $request, Type $type)
     {
-        $type->update($request->all());
+        $type->update($request->validated());
         return redirect()->route('types.show', ['type' => $type]);
     }
 

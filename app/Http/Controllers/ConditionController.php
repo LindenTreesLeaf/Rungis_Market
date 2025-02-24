@@ -11,7 +11,7 @@ class ConditionController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Condition::class);
-        $conditions = Condition::all();
+        $conditions = Condition::validated();
         return view('conditions.index', compact('conditions'));
     }
 
@@ -23,7 +23,7 @@ class ConditionController extends Controller
 
     public function store(Request $request)
     {
-        $condition = Condition::create($request->all());
+        $condition = Condition::create($request->validated());
         return redirect()->route('conditions.show', ['condition' => $condition]);
     }
 
@@ -41,7 +41,7 @@ class ConditionController extends Controller
 
     public function update(Request $request, Condition $condition)
     {
-        $condition->update($request->all());
+        $condition->update($request->validated());
         return redirect()->route('conditions.show', ['condition' => $condition]);
     }
 

@@ -11,7 +11,7 @@ class OrderController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Order::class);
-        $orders = Order::all();
+        $orders = Order::validated();
         return view('orders.index', compact('orders'));
     }
 
@@ -23,7 +23,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $order = Order::create($request->all());
+        $order = Order::create($request->validated());
         return redirect()->route('orders.show', ['order' => $order]);
     }
 
@@ -41,7 +41,7 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        $order->update($request->all());
+        $order->update($request->validated());
         return redirect()->route('orders.show', ['order' => $order]);
     }
 

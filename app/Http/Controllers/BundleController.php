@@ -23,7 +23,7 @@ class BundleController extends Controller
 
     public function store(Request $request)
     {
-        $bundle = Bundle::create($request->all());
+        $bundle = Bundle::create($request->validated());
         return redirect()->route('bundles.show', ['bundle' => $bundle]);
     }
 
@@ -45,7 +45,7 @@ class BundleController extends Controller
 
     public function update(Request $request, Bundle $bundle)
     {
-        $bundle->update($request->all());
+        $bundle->update($request->validated());
         return redirect()->route('bundles.show', ['bundle' => $bundle]);
     }
 

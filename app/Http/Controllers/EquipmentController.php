@@ -11,7 +11,7 @@ class EquipmentController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Equipment::class);
-        $equipment = Equipment::all();
+        $equipment = Equipment::validated();
         return view('equipment.index', compact('equipment'));
     }
 
@@ -23,7 +23,7 @@ class EquipmentController extends Controller
 
     public function store(Request $request)
     {
-        $equipment = Equipment::create($request->all());
+        $equipment = Equipment::create($request->validated());
         return redirect()->route('equipment.show', ['equipment' => $equipment]);
     }
 
@@ -41,7 +41,7 @@ class EquipmentController extends Controller
 
     public function update(Request $request, Equipment $equipment)
     {
-        $equipment->update($request->all());
+        $equipment->update($request->validated());
         return redirect()->route('equipment.show', ['equipment' => $equipment]);
     }
 
