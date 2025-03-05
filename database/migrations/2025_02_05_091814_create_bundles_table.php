@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("product", length:100);
             $table->integer("quantity");
             $table->float("price", precision:2);
+            $table->boolean("validated");
         });
     }
 
