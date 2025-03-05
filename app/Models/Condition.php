@@ -7,12 +7,6 @@ use App\Models\Equipment;
 
 class Condition extends Model
 {
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

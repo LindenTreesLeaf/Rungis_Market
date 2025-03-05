@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name", length:50);
             $table->date("last_revision");
             $table->date("next_revision");
+            $table->timestamps();
         });
     }
 

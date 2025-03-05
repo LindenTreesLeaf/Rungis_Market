@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->string("tier", length:50);
+            $table->timestamps();
         });
     }
 

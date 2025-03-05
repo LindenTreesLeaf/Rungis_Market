@@ -11,6 +11,10 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                'violet': '#6a0dad',  // Couleur personnalisée pour le violet
+                'dark': '#333333',    // Couleur personnalisée pour le noir ou gris sombre
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },

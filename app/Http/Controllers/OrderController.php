@@ -10,60 +10,44 @@ class OrderController extends Controller
 {
     public function index()
     {
-        if (Gate::denies('see order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir les commandes.");
-        }
-        $orders = Order::all();
+        $this->authorize('viewAny', Order::class);
+        $orders = Order::validated();
         return view('orders.index', compact('orders'));
     }
 
     public function create()
     {
-        if (Gate::denies('create order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer une commande.");
-        }
+        $this->authorize('create', Order::class);
         return view('orders.create');
     }
 
     public function store(Request $request)
     {
-        if (Gate::denies('create order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer une commande.");
-        }
-        $order = Order::create($request->all());
+        $order = Order::create($request->validated());
         return redirect()->route('orders.show', ['order' => $order]);
     }
 
     public function show(Order $order)
     {
-        if (Gate::denies('see order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir cette commande.");
-        }
+        $this->authorize('viewAny', $order);
         return view('orders.show', compact('order'));
     }
 
     public function edit(Order $order)
     {
-        if (Gate::denies('edit order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette commande.");
-        }
+        $this->authorize('update', $order);
         return view('orders.edit', compact('order'));
     }
 
     public function update(Request $request, Order $order)
     {
-        if (Gate::denies('edit order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier cette commande.");
-        }
-        $order->update($request->all());
+        $order->update($request->validated());
         return redirect()->route('orders.show', ['order' => $order]);
     }
 
     public function destroy(Order $order)
     {
-        if (Gate::denies('delete order')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de supprimer cette commande.");
-        }
+        $this->authorize('delete', $order);
         $order->delete();
         return redirect()->route('orders.index')->with('success', "Commande supprimée avec succès.");
     }

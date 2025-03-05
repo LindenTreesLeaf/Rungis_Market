@@ -10,18 +10,14 @@ class PlaceController extends Controller
 {
     public function index()
     {
-        if (Gate::denies('see place')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir les lieux.");
-        }
-        $places = Place::all();
+        $this->authorize('viewAny', Place::class);
+        $places = Place::validated();
         return view('places.index', compact('places'));
     }
 
     public function create()
     {
-        if (Gate::denies('create place')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un lieu.");
-        }
+        $this->authorize('create', Place::class);
         return view('places.create');
     }
 
@@ -30,41 +26,41 @@ class PlaceController extends Controller
         if (Gate::denies('create place')) {
             return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un lieu.");
         }
-        $place = Place::create($request->all());
+        $place = Place::create($request->validated());
         return redirect()->route('places.show', ['place' => $place]);
     }
 
     public function show(Place $place)
     {
-        if (Gate::denies('see place')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de voir ce lieu.");
-        }
+        $this->authorize('view', $place);
         return view('places.show', compact('place'));
     }
 
     public function edit(Place $place)
     {
-        if (Gate::denies('edit place')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce lieu.");
-        }
+        $this->authorize('update', $place);
         return view('places.edit', compact('place'));
     }
 
     public function update(Request $request, Place $place)
     {
-        if (Gate::denies('edit place')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce lieu.");
-        }
-        $place->update($request->all());
+        $place->update($request->validated());
         return redirect()->route('places.show', ['place' => $place]);
     }
 
     public function destroy(Place $place)
     {
-        if (Gate::denies('delete place')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de supprimer ce lieu.");
-        }
+        $this->authorize('delete', $place);
         $place->delete();
         return redirect()->route('places.index')->with('success', "Lieu supprimé avec succès.");
     }
+
+    public function getAvailablePlaces($buildingId)
+    {
+        $places = Place::where('building_id', $buildingId)
+        ->where('status', 'available') 
+        ->get();
+        return response()->json(['places' => $places]);
+    }
+
 }

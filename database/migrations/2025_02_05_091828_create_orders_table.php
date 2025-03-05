@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date("date_passed");
             $table->date("date_retrieve");
+            $table->timestamps();
         });
     }
 

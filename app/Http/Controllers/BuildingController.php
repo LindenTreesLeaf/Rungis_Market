@@ -10,54 +10,44 @@ class BuildingController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Building::class);
         $buildings = Building::all();
         return view('buildings.index', compact('buildings'));
     }
 
     public function create()
     {
-        if (Gate::denies('create building')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un bâtiment.");
-        }
+        $this->authorize('create', Building::class);
         return view('buildings.create');
     }
 
     public function store(Request $request)
     {
-        if (Gate::denies('create building')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un bâtiment.");
-        }
-        $building = Building::create($request->all());
+        $building = Building::create($request->validated());
         return redirect()->route('buildings.show', ['building' => $building]);
     }
 
     public function show(Building $building)
     {
+        $this->authorize('view', $building);
         return view('buildings.show', compact('building'));
     }
 
     public function edit(Building $building)
     {
-        if (Gate::denies('edit building')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bâtiment.");
-        }
+        $this->authorize('update', $building);
         return view('buildings.edit', compact('building'));
     }
 
     public function update(Request $request, Building $building)
     {
-        if (Gate::denies('edit building')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce bâtiment.");
-        }
-        $building->update($request->all());
+        $building->update($request->validated());
         return redirect()->route('buildings.show', ['building' => $building]);
     }
 
     public function destroy(Building $building)
     {
-        if (Gate::denies('delete building')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de supprimer ce bâtiment.");
-        }
+        $this->authorize('delete', $building);
         $building->delete();
         return redirect()->route('buildings.index')->with('success', "Bâtiment supprimé avec succès.");
     }

@@ -10,53 +10,44 @@ class TypeController extends Controller
 {
     public function index()
     {
-        // Ajoutez ici la logique pour afficher tous les types si nécessaire
+        $this->authorize('viewAny', Type::class);
+        $types = Type::validated();
+        return view('types.index', compact('types'));
     }
 
     public function create()
     {
-        if (Gate::denies('create type')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un type.");
-        }
+        $this->authorize('create', Type::class);
         return view('types.create');
     }
 
     public function store(Request $request)
     {
-        if (Gate::denies('create type')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de créer un type.");
-        }
-        $type = Type::create($request->all());
+        $type = Type::create($request->validated());
         return redirect()->route('types.show', ['type' => $type]);
     }
 
     public function show(Type $type)
     {
+        $this->authorize('view', $type);
         return view('types.show', compact('type'));
     }
 
     public function edit(Type $type)
     {
-        if (Gate::denies('edit type')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce type.");
-        }
+        $this->authorize('update', $type);
         return view('types.edit', compact('type'));
     }
 
     public function update(Request $request, Type $type)
     {
-        if (Gate::denies('edit type')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de modifier ce type.");
-        }
-        $type->update($request->all());
+        $type->update($request->validated());
         return redirect()->route('types.show', ['type' => $type]);
     }
 
     public function destroy(Type $type)
     {
-        if (Gate::denies('delete type')) {
-            return redirect()->route('home')->with('error', "Vous n'avez pas le droit de supprimer ce type.");
-        }
+        $this->authorize('delete', $type);
         $type->delete();
         return redirect()->route('types.index')->with('success', "Type supprimé avec succès.");
     }
