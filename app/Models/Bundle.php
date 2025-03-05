@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use APp\Models\Order;
+use App\Models\Order;
 use App\Models\Unit;
 
 class Bundle extends Model

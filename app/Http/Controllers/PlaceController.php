@@ -54,4 +54,13 @@ class PlaceController extends Controller
         $place->delete();
         return redirect()->route('places.index')->with('success', "Lieu supprimé avec succès.");
     }
+
+    public function getAvailablePlaces($buildingId)
+    {
+        $places = Place::where('building_id', $buildingId)
+        ->where('status', 'available') 
+        ->get();
+        return response()->json(['places' => $places]);
+    }
+
 }
