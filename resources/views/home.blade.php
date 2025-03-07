@@ -49,7 +49,7 @@
                 <?php echo asset('images/MarcheRungis-300.png'); ?> 300w,
                 <?php echo asset('images/MarcheRungis-150.png'); ?> 150w,"
                 sizes="960px, 750px, 450px, 300px, 150px"
-                src="<?php echo asset('images/MarcheRungis-960.png'); ?>" title="Marché Rungis" class="img-fluid">
+                src="<?php echo asset('images/MarcheRungis-960.png'); ?>" title="Marché Rungis" class="img-fluid rounded-lg shadow-lg">
         </div>
     </div>
 @endsection
