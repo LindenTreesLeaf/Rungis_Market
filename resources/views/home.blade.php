@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="bg-yellow-500 text-white text-center py-4">
+    <section class="bg-yellow-500 text-center py-4">
         <p class="text-lg font-semibold">Offre Spéciale : Pour 2 zones prises, 1 zone offerte ! 🎉</p>
     </section>
 
