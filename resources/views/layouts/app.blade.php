@@ -32,5 +32,6 @@
                 @yield('content') <!-- Affiche le contenu de chaque page -->
             </main>
         </div>
+        <x-footer/>
     </body>
 </html>

@@ -11,8 +11,6 @@
             <p><strong>Email :</strong> {{ Auth::user()->email }}</p>
             <p><strong>Adresse :</strong> {{ Auth::user()->address }}</p>
             <p><strong>Numéro de téléphone :</strong> {{ Auth::user()->phone_number }}</p>
-
-            <
             <a href="{{ route('profile.edit') }}" class="btn btn-primary">Modifier</a>
         </div>
     </div>
