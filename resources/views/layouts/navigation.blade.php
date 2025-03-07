@@ -24,13 +24,13 @@
                     @auth
                         @if(Auth::user()->hasRole('seller'))
                             <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
-                            <x-nav-link :href="route('zones.index')">Zones</x-nav-link>
+                            <!--zones-->
                             <x-nav-link :href="route('equipments.index')">Équipements</x-nav-link>
                         @elseif(Auth::user()->hasRole('client'))
                             <x-nav-link :href="route('orders.index')">Mes Commandes</x-nav-link>
                             <x-nav-link :href="route('bundles.index')">Bundles</x-nav-link>
                         @elseif(Auth::user()->hasRole('supervisor') || Auth::user()->hasRole('admin'))
-                        
+                            <!--admin dashboard et user index-->
                     @endif
                 @endauth
                 </div>

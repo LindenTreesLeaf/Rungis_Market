@@ -5,7 +5,6 @@
         <p class="text-lg font-semibold">Offre Spéciale : Pour 2 zones prises, 1 zone offerte ! 🎉</p>
     </section>
 
-    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white text-center">Bienvenue au Marché de Rungis</h1>
         <p class="text-lg text-gray-700 dark:text-gray-300 text-center mt-2">

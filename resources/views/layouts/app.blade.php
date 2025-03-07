@@ -29,6 +29,9 @@
 
             <!-- Page Content -->
             <main>
+                @isset($content)
+                    {{$content}}
+                @endisset
                 @yield('content') <!-- Affiche le contenu de chaque page -->
             </main>
         </div>
