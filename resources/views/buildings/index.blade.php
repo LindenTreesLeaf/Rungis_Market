@@ -1,45 +1,70 @@
 @extends('layouts.app')
 
-@section('title', 'Liste des Bâtiments')
+@section('title') Batiments @endsection
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-gray-900 text-white p-6 rounded-lg shadow-lg">
-    <h1 class="text-3xl font-semibold text-purple-500 mb-6">Liste des Bâtiments</h1>
-
-    
-    <div class="mb-4">
-        <a href="{{ route('buildings.create') }}" 
-           class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-semibold 
-                  transition duration-200 ease-in-out inline-block">
-            + Ajouter un bâtiment
-        </a>
-    </div>
-
-    
-    <div class="space-y-4">
-        @foreach ($buildings as $building)
-            <div class="bg-gray-800 p-5 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold text-purple-400">{{ $building->name }}</h2>
-                <p class="text-gray-300">Type : <span class="text-purple-300">{{ $building->type->name }}</span></p>
-                <p class="text-gray-300">Secteur : <span class="text-purple-300">{{ $building->sector->name }}</span></p>
-                <p class="text-gray-300">Places disponibles : 
-                    <span class="text-purple-300">{{ $building->places->count() }}</span>
-                </p>
-
-                <div class="mt-4 flex space-x-2">
-                    <a href="{{ route('buildings.show', $building->id) }}" 
-                       class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded-md font-semibold 
-                              transition duration-200 ease-in-out">
-                        Voir
-                    </a>
-                    <a href="{{ route('buildings.edit', $building->id) }}" 
-                       class="bg-yellow-600 hover:bg-yellow-700 text-white py-1 px-3 rounded-md font-semibold 
-                              transition duration-200 ease-in-out">
-                        Modifier
+<x-display-index>
+    <x-slot name="title">Liste des Bâtiments</x-slot>
+    <x-slot name="content">
+        @if(Auth::user()->hasRole('admin'))
+            <div class="row">
+                <div class="mb-4">
+                    <a href="{{ route('buildings.create') }}" class="btn btn-primary text-white p-2 font-semibold">
+                        + Ajouter un bâtiment
                     </a>
                 </div>
             </div>
-        @endforeach
-    </div>
-</div>
+        @endif
+
+        <div>
+            @foreach($sectors as $sector)
+                <div class="card mb-2">
+                    <div class="card-title fs-3 px-1 cardtitlefullborder">{{$sector->name}}</div>
+                    <div class="card-body">
+                        @foreach($buildings as $building)
+                            @if($building->sector == $sector)
+                                <div class="row">
+                                    <div class="contentdisplay mb-2">
+                                        <h2 class="text-xl font-semibold">{{ $building->name }}</h2>
+                                        <p class="text-body-secondary">Type : <span class="textcolorinfo">{{ $building->type->name }}</span></p>
+                                        <p class="text-body-secondary">Places disponibles : 
+                                            <span class="textcolorinfo">{{ $building->places->count() }}</span>
+                                        </p>
+
+                                        <div class="mt-4 flex space-x-2">
+                                            <a href="{{ route('buildings.show', $building->id) }}" class="btn btn-outline-success p-1">
+                                                Détail
+                                            </a>
+                                            <a href="{{ route('buildings.edit', $building->id) }}" class="btn btn-outline-warning p-1">
+                                                Modifier
+                                            </a>
+                                            @can('delete building')
+                                                <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$building->id}}">Supprimer</button>
+                                            @endcan
+                                        </div>
+                                    </div>
+                                </div>
+                                <x-bootstrap.deleteModal>
+                                    <x-slot:id>deleteModal_{{$building->id}}</x-slot>
+                                    <x-slot:title>Voulez-vous supprimer le bâtiment {{$building->name}} ?</x-slot>
+                                    <x-slot:slot>
+                                        <div class="row"></div>
+                                            <div class="col">
+                                                <form action="{{route('buildings.destroy', $building->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-primary mb-1">Oui</button>
+                                                </form>
+                                                <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Non</button>
+                                            </div>
+                                    </x-slot>
+                                </x-bootstrap>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </x-slot>
+</x-display-index>
 @endsection

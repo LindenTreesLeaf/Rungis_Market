@@ -23,16 +23,17 @@
                     </x-nav-link>
                     @auth
                         @if(Auth::user()->hasRole('seller'))
-                            <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
-                            <!--zones-->
-                            <x-nav-link :href="route('equipments.index')">Équipements</x-nav-link>
+                            <!---->
                         @elseif(Auth::user()->hasRole('client'))
-                            <x-nav-link :href="route('orders.index')">Mes Commandes</x-nav-link>
-                            <x-nav-link :href="route('bundles.index')">Bundles</x-nav-link>
-                        @elseif(Auth::user()->hasRole('supervisor') || Auth::user()->hasRole('admin'))
-                            <!--admin dashboard et user index-->
-                    @endif
-                @endauth
+                            <!---->
+                        @elseif(Auth::user()->hasRole('supervisor'))
+                            <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
+                            <!--equipment condition card-->
+                        @elseif(Auth::user()->hasRole('admin'))
+                            <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
+                            <!---->
+                        @endif
+                    @endauth
                 </div>
             </div>
 

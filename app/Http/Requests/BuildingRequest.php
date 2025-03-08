@@ -22,25 +22,9 @@ class BuildingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:50'],
-        ];
-    }
-
-
-    public function messages()
-    {
-        return [
-            'name.required' => 'Le nom du bâtiment est obligatoire.',
-            'name.string' => 'Le nom du bâtiment doit être une chaîne de caractères.',
-            'name.max' => 'Le nom du bâtiment ne peut pas dépasser 50 caractères.',
-        ];
-    }
-
-     
-    public function attributes() : array
-    {
-        return [
-                'name' => 'name',
+            'name' => 'required|max:50',
+            'sector_id' => 'required|exists:sectors,id',
+            'type_id' => 'required|exists:types,id',
         ];
     }
 
