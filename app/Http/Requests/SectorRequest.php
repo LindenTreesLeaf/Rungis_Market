@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BuildingRequest extends FormRequest
+class SectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class BuildingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:50',
-            'sector_id' => 'required|exists:sectors,id',
-            'type_id' => 'required|exists:types,id',
+            'name' => 'required|min:1|max:50',
         ];
     }
 
@@ -36,10 +34,7 @@ class BuildingRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'name',
-            'sector_id' => 'sector_id',
-            'type_id' => 'type_id',
+            'name' => 'name,'
         ];
     }
-
 }

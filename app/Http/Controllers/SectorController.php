@@ -59,7 +59,18 @@ class SectorController extends Controller
      */
     public function update(SectorRequest $request, string $id)
     {
-        //
+        $sector = Sector::findOrFail($id);
+        $sector->update($request->validated());
+        // Les buildings sont forcément dans un sector donc la gestion de la déselection n'est pas gérée.
+        if ($request->has('buildings')) {
+            $buildings_id = $request->input('buildings');
+            foreach($buildings_id as $building_id){
+                $building = Building::findOrFail($building_id);
+                $building->sector()->associate($sector);
+                $building->save();
+            }
+        }
+        return redirect()->route('buildings.index');
     }
 
     /**
