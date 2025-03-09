@@ -19,7 +19,10 @@
         <div>
             @foreach($sectors as $sector)
                 <div class="card mb-2">
-                    <div class="card-title fs-3 px-1 cardtitlefullborder">{{$sector->name}}</div>
+                    <div class="card-title fs-3 px-1 cardtitlefullborder">
+                        {{$sector->name}}
+                        <a href="{{route('sectors.edit', $sector)}}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                    </div>
                     <div class="card-body">
                         @foreach($buildings as $building)
                             @if($building->sector == $sector)
