@@ -34,7 +34,7 @@ class SectorSeeder extends Seeder
             'name' => "Horticulture et décoration",
         ]);
         DB::table('sectors')->insert([
-            'name' => "pôle logistique et tertaire",
+            'name' => "Pôle logistique et tertaire",
         ]);
     }
 }

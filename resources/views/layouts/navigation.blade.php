@@ -21,6 +21,19 @@
                     <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
                         {{ __('Nous contacter') }}
                     </x-nav-link>
+                    @auth
+                        @if(Auth::user()->hasRole('seller'))
+                            <!---->
+                        @elseif(Auth::user()->hasRole('client'))
+                            <!---->
+                        @elseif(Auth::user()->hasRole('supervisor'))
+                            <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
+                            <!--equipment condition card-->
+                        @elseif(Auth::user()->hasRole('admin'))
+                            <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
+                            <!---->
+                        @endif
+                    @endauth
                 </div>
             </div>
 

@@ -44,7 +44,8 @@ class ApiOrdersController extends Controller {
                     
                 }else if($user->hasRole("seller")){
 
-                    $data = Bundle::where("bundles.user_id", "=", $user->id)
+                    $data = Bundle::select("product","quantity","price","validated","name_u","name", "email","bundles.id as b_id")
+                            ->where("bundles.user_id", "=", $user->id)
                             ->join("users", "users.id", "=", "bundles.user_id")
                             ->join("units","units.id","=", "bundles.unit_id")
                             ->get();

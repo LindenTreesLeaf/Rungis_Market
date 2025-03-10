@@ -11,51 +11,50 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function show()
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
     {
-        return view('profile.show'); // Affiche la vue show.blade.php
-    }
-
-    // Affiche le formulaire de modification du profil
-    public function edit()
-    {
-        return view('profile.edit'); // Affiche la vue edit.blade.php
-    }
-
-    // Met à jour les informations du profil
-    public function update(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'address' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:15',
-            'password' => 'nullable|confirmed|min:8',
+        return view('profile.edit', [
+            'user' => $request->user(),
         ]);
+    }
 
-        $user = Auth::user();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->phone_number = $request->phone_number;
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $request->user()->fill($request->validated());
 
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        $user->save();
+        $request->user()->save();
 
-        return redirect()->route('profile.show')->with('success', 'Profil mis à jour avec succès!');
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    // Supprime le profil de l'utilisateur
-    public function destroy()
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request): RedirectResponse
     {
-        $user = Auth::user();
-        $user->delete();
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
 
         Auth::logout();
 
-        return redirect()->route('home')->with('success', 'Votre profil a été supprimé.');
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
     }
 }

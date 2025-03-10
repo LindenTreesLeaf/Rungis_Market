@@ -13,7 +13,7 @@ class SectorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,7 +21,7 @@ class SectorPolicy
      */
     public function view(User $user, Sector $sector): bool
     {
-        return true;
+        return false;
     }
 
     /**

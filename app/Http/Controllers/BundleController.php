@@ -29,7 +29,6 @@ class BundleController extends Controller
 
     public function show(Bundle $bundle)
     {
-        return view('bundles.show',  ['bundle' => $bundle]);
         $this->authorize('view', $bundle);
         return view('bundles.show', compact('bundle'));
     }

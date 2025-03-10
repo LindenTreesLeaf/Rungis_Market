@@ -1,0 +1,35 @@
+$primary: #d91818;
+
+@import "bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+.contentdisplay{
+    @extend .bg-white;
+    @extend .shadow;
+    @extend .rounded-3;
+    @extend .p-3;
+}
+
+.listdisplay{
+    @extend .bg-white;
+    @extend .shadow;
+    @extend .rounded-3;
+    @extend .p-1;
+    @extend .my-1;
+}
+
+.cardtitleborder{
+    border-bottom: 1px solid $primary;
+}
+
+.cardtitlefullborder{
+    background-color: rgba(217,24,24,0.1);
+}
+
+.textcolorinfo{
+    color: #ec4141;
+}
+
+.textcolorhighlight{
+    color: #bb3333;
+}
