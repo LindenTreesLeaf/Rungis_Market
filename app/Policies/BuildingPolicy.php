@@ -21,7 +21,7 @@ class BuildingPolicy
      */
     public function view(User $user, Building $building): bool
     {
-        return true;
+        return $user->can('see building');
     }
 
     /**
@@ -65,7 +65,8 @@ class BuildingPolicy
     }
 
     public function before(User $user){
-        if($user->hasRole('admin'))
+        if($user->hasRole('admin')){
             return true;
+        }
     }
 }

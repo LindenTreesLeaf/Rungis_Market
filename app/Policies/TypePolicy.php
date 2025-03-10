@@ -13,7 +13,7 @@ class TypePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,7 +21,7 @@ class TypePolicy
      */
     public function view(User $user, Type $type): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -29,7 +29,7 @@ class TypePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create type');
+        return false;
     }
 
     /**
@@ -45,7 +45,7 @@ class TypePolicy
      */
     public function delete(User $user, Type $type): bool
     {
-        return $user->can('delete type');
+        return false;
     }
 
     /**

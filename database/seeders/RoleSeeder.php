@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -13,13 +14,14 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        // Vérifier si les rôles existent déjà avant de les créer
+        // Roles
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $seller = Role::firstOrCreate(['name' => 'seller']);
         $supervisor = Role::firstOrCreate(['name' => 'supervisor']);
         $client = Role::firstOrCreate(['name' => 'client']);
 
         // Permissions
+        $seeBuilding = Permission::firstOrCreate(['name' => 'see building']);
         $createBuilding = Permission::firstOrCreate(['name' => 'create building']);
         $editBuilding = Permission::firstOrCreate(['name' => 'edit building']);
         $deleteBuilding = Permission::firstOrCreate(['name' => 'delete building']);
@@ -54,22 +56,19 @@ class RoleSeeder extends Seeder
 
         $editSector = Permission::firstOrCreate(['name' => 'edit sector']);
 
-        $createType = Permission::firstOrCreate(['name' => 'create type']);
         $editType = Permission::firstOrCreate(['name' => 'edit type']);
-        $deleteType = Permission::firstOrCreate(['name' => 'delete type']);
 
         // Rôles et permissions
         // admin
         $admin->givePermissionTo($createBuilding);
         $admin->givePermissionTo($deleteBuilding);
-        $admin->givePermissionTo($createType);
-        $admin->givePermissionTo($deleteType);
         $admin->givePermissionTo($createCondition);
         $admin->givePermissionTo($deleteCondition);
 
         // supervisor
         $supervisor->givePermissionTo($editSector);
         $supervisor->givePermissionTo($editType);
+        $supervisor->givePermissionTo($seeBuilding);
         $supervisor->givePermissionTo($editBuilding);
         $supervisor->givePermissionTo($seeEquipment);
         $supervisor->givePermissionTo($createEquipment);
@@ -86,6 +85,7 @@ class RoleSeeder extends Seeder
         $supervisor->givePermissionTo($deleteCard);
 
         // seller
+        $seller->givePermissionTo($seeBuilding);
         $seller->givePermissionTo($seePlace);
         $seller->givePermissionTo($createBundle);
         $seller->givePermissionTo($editBundle);
@@ -98,4 +98,3 @@ class RoleSeeder extends Seeder
         $client->givePermissionTo($deleteOrder);
     }
 }
-
