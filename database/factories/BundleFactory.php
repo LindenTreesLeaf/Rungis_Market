@@ -24,6 +24,7 @@ class BundleFactory extends Factory
             "product"=>fake()->sentence(3),
             "quantity"=>fake()->numberBetween(5,100),
             "price"=>fake()->randomFloat(2),
+            "validated"=>fake()->boolean(),
             "user_id"=>$user->id,
             "order_id"=>null,
             "unit_id"=>$unit->id,

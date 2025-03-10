@@ -13,7 +13,6 @@ class ApiAuthController extends Controller {
 
     public function store(Request $request){
 
-        $out = ["error" => 1]; // a faire, ne plus passer par la login request, mais m'occuper de vérifier que l'utilisateur est le bon.
 
         
         if($request->filled('email') && $request->filled('password')){
@@ -38,6 +37,8 @@ class ApiAuthController extends Controller {
 
                 $out = ['error' => 0,'token' => $token];
 
+            }else{
+                $out = ["error" => 5];
             }
 
             
@@ -50,15 +51,16 @@ class ApiAuthController extends Controller {
                 $out = ["error" => 0];
             }
 
+        }else{
+            $out = ["error" => 1];
         }
 
-        return response()->json($out);
+        return $out;
 
     }
 
     public function destroy(Request $request)
     {
-        $out = ['error' => 1];
 
         if($request->exists('token')){
             $count = DB::table('personnal_access_token')->where("value_token" , "LIKE", $request->get('token'))->delete();
@@ -66,14 +68,18 @@ class ApiAuthController extends Controller {
             if($count == 1){
                 $out = ['error' => 0];
             }else if($count > 1){
-                $out = ['error' => 2]; 
+                $out = ['error' => 3]; 
+            }else{
+                $out = ['error' => 2];
             }
 
-            $out = ['error' => $count];
+            
 
             
+        }else{
+            $out = ['error'=>1];
         }
 
-        return response()->json($out);
+        return $out;
     }
 }

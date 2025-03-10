@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Bundle;
+use App\Models\User;
 
 class ApiBundlesController extends Controller {
 
@@ -53,6 +54,51 @@ class ApiBundlesController extends Controller {
         }
 
         return $out;
+    }
+
+    public function validateBundle(Request $request){
+        if($request->has('token') && $request->has("bundleid")){
+            
+
+            $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
+
+
+            if(count($tokenExist) == 1){
+
+                $user = User::where('users.id', '=', $tokenExist[0]->user_id)
+                                ->get()[0];
+
+                if($user->hasRole("seller")){
+
+                    $affected = Bundle::where('bundles.id', "=",$request->get("bundleid"))
+                                        ->where('bundles.user_id','=', $user->id)
+                                        ->update(['validated' => 1]);
+
+                    if($affected == 1){
+                        $out = ['error' => 0, 'role' => 'seller'];
+                    }else{
+                        $out = ['error' => 5];
+                    }
+                
+                                    
+                }else{
+                    $out = ['error' => 4];
+                }
+
+
+            }else if(count($tokenExist) == 0){
+                $out = ['error' => 2];
+            }else{
+                $out = ['error' => 3];
+            }
+        
+        }else{
+            $out = ['error' => 1];            
+        }
+
+        return $out;
+
+
     }
 
 
