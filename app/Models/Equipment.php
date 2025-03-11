@@ -24,7 +24,7 @@ class Equipment extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'last_revision', 'next_revision', 'building_id'];
+    protected $fillable = ['name', 'last_revision', 'next_revision', 'building_id', 'condition_id'];
 
     public function building(){
         return $this->belongsTo(Building::class);

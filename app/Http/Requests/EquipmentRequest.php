@@ -22,9 +22,11 @@ class EquipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:50'],
-            'last_revision' => ['required', 'date'],
-            'next_revision' => ['required', 'date'],
+            'name' => 'required|max:50',
+            'last_revision' => 'required|date',
+            'next_revision' => 'required|date',
+            'building_id' => 'required|exists:buildings,id',
+            'condition_id' => 'required|exists:conditions,id',
         ];
     }
 
@@ -47,7 +49,9 @@ class EquipmentRequest extends FormRequest
         return [
                 'name' => 'name',
                 'last_revision' => 'last_revision',
-                'next_revision' => 'next_revision'
+                'next_revision' => 'next_revision',
+                'building_id' => 'building_id',
+                'condition_id' => 'condition_id',
         ];
     }
 }

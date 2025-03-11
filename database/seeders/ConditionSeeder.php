@@ -19,7 +19,7 @@ class ConditionSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         DB::table('conditions')->insert([
-            'name' => "Foncionnel",
+            'name' => "Fonctionnel",
         ]);
 
         DB::table('conditions')->insert([

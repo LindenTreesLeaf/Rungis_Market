@@ -18,7 +18,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('buildings', BuildingController::class);
-Route::resource('equipments', EquipmentController::class);
+Route::get('/equipments/create/{building_id}', [EquipmentController::class, 'create'])->name('equipments.create');
+Route::resource('equipments', EquipmentController::class)->except(['create']);
 Route::resource('bundles', BundleController::class);
 Route::resource('cards', CardController::class);
 Route::resource('conditions', ConditionController::class);

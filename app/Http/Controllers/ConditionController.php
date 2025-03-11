@@ -4,51 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Condition;
-use Illuminate\Support\Facades\Gate;
+use App\models\Equipment;
+use App\Http\Requests\ConditionRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ConditionController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
-        $this->authorize('viewAny', Condition::class);
-        $conditions = Condition::validated();
-        return view('conditions.index', compact('conditions'));
+        //
     }
 
     public function create()
     {
-        $this->authorize('create', Condition::class);
-        return view('conditions.create');
+        //
     }
 
     public function store(Request $request)
     {
-        $condition = Condition::create($request->validated());
-        return redirect()->route('conditions.show', ['condition' => $condition]);
+        //
     }
 
     public function show(Condition $condition)
     {
-        $this->authorize('view', $condition);
-        return view('conditions.show', compact('condition'));
+        //
     }
 
     public function edit(Condition $condition)
     {
-        $this->authorize('update', $condition);
-        return view('conditions.edit', compact('condition'));
+        //
     }
 
-    public function update(Request $request, Condition $condition)
+    public function update(ConditionRequest $request, string $id_cond)
     {
+        $condition = Condition::findOrFail($id_cond);
+        $this->authorize('update', $condition);
         $condition->update($request->validated());
-        return redirect()->route('conditions.show', ['condition' => $condition]);
+        return back()->with('message', 'Condition modifiée.');
     }
 
     public function destroy(Condition $condition)
     {
-        $this->authorize('delete', Condition::class);
-        $condition->delete();
-        return redirect()->route('conditions.index')->with('success', "Condition supprimée avec succès.");
+        //
     }
 }

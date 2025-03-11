@@ -34,10 +34,7 @@ class RoleSeeder extends Seeder
         $editCard = Permission::firstOrCreate(['name' => 'edit card']);
         $deleteCard = Permission::firstOrCreate(['name' => 'delete card']);
 
-        $seeCondition = Permission::firstOrCreate(['name' => 'see condition']);
-        $createCondition = Permission::firstOrCreate(['name' => 'create condition']);
         $editCondition = Permission::firstOrCreate(['name' => 'edit condition']);
-        $deleteCondition = Permission::firstOrCreate(['name' => 'delete condition']);
 
         $seeEquipment = Permission::firstOrCreate(['name' => 'see equipment']);
         $createEquipment = Permission::firstOrCreate(['name' => 'create equipment']);
@@ -62,8 +59,6 @@ class RoleSeeder extends Seeder
         // admin
         $admin->givePermissionTo($createBuilding);
         $admin->givePermissionTo($deleteBuilding);
-        $admin->givePermissionTo($createCondition);
-        $admin->givePermissionTo($deleteCondition);
 
         // supervisor
         $supervisor->givePermissionTo($editSector);
@@ -74,7 +69,6 @@ class RoleSeeder extends Seeder
         $supervisor->givePermissionTo($createEquipment);
         $supervisor->givePermissionTo($editEquipment);
         $supervisor->givePermissionTo($deleteEquipment);
-        $supervisor->givePermissionTo($seeCondition);
         $supervisor->givePermissionTo($editCondition);
         $supervisor->givePermissionTo($seePlace);
         $supervisor->givePermissionTo($createPlace);

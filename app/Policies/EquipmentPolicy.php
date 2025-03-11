@@ -13,7 +13,7 @@ class EquipmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('see equipment');
+        return true;
     }
 
     /**

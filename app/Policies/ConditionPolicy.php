@@ -13,7 +13,7 @@ class ConditionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('see condition');
+        //
     }
 
     /**
@@ -21,7 +21,7 @@ class ConditionPolicy
      */
     public function view(User $user, Condition $condition): bool
     {
-        return $user->can('see condition');
+        //
     }
 
     /**
@@ -29,7 +29,7 @@ class ConditionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create condition');
+        //
     }
 
     /**
@@ -45,7 +45,7 @@ class ConditionPolicy
      */
     public function delete(User $user, Condition $condition): bool
     {
-        return $user->can('delete condition');
+        //
     }
 
     /**

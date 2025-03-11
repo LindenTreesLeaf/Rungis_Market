@@ -9,7 +9,7 @@
         @if(Auth::user()->hasRole('admin'))
             <div class="row">
                 <div class="mb-4">
-                    <a href="{{ route('buildings.create') }}" class="btn btn-primary text-white p-2 font-semibold">
+                    <a href="{{ route('buildings.create') }}" class="btn btn-primary p-2 font-semibold">
                         + Ajouter un bâtiment
                     </a>
                 </div>
@@ -94,7 +94,7 @@
                                                         <button type="submit" class="btn btn-success btn-sm">Confirmer</button>
                                                     </div>
                                                     <div class="col-2">
-                                                        <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Non</button>
+                                                        <span class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Annuler</span>
                                                     </div>
                                                 </div>
                                             </form>
