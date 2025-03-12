@@ -25,6 +25,9 @@
                         @can('viewAny', App\Models\Building::class)
                             <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
                         @endcan
+                        @hasrole('seller')
+                            <x-nav-link :href="route('places.index')">Réservations</x-nav-link>
+                        @endhasrole
                     @endauth
                 </div>
             </div>

@@ -21,7 +21,9 @@
                 <div class="card mb-2">
                     <div class="card-title fs-3 px-1 cardtitlefullborder">
                         {{$sector->name}}
-                        <a href="{{route('sectors.edit', $sector)}}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                        @can('update', $sector)
+                            <a href="{{route('sectors.edit', $sector)}}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         @foreach($buildings as $building)
@@ -45,9 +47,11 @@
                                             <a href="{{ route('buildings.show', $building->id) }}" class="btn btn-outline-success p-1">
                                                 Détail
                                             </a>
-                                            <a href="{{ route('buildings.edit', $building->id) }}" class="btn btn-outline-warning p-1">
-                                                Modifier
-                                            </a>
+                                            @can('update', $building)
+                                                <a href="{{ route('buildings.edit', $building->id) }}" class="btn btn-outline-warning p-1">
+                                                    Modifier
+                                                </a>
+                                            @endcan
                                             @can('delete', $building)
                                                 <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$building->id}}">Supprimer</button>
                                             @endcan

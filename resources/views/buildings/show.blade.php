@@ -26,21 +26,21 @@
                     @foreach ($building->equipments as $equipment)
                         <li class="listdisplay">
                             <div class="row">
-                                <div class="col-10">
+                                <div class="col-11">
                                     <div class="row">
-                                        @can('view', $equipment)
+                                        @if(Auth::user()->can('view', $equipment))
                                             <a href="{{route('equipments.show', $equipment->id)}}"><span class="textcolorinfo font-semibold">{{ $equipment->name }}</span></a>
-                                        @elsecan
+                                        @else
                                             <span class="textcolorinfo font-semibold">{{ $equipment->name }}</span>
-                                        @endcan
+                                        @endif
                                     </div>
                                     <div class="row">
                                         <span><strong class="textcolorinfo font-semibold">Prochaine révision : </strong>{{date('d/m/Y', strtotime($equipment->next_revision))}}</span>
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col justify-content-end">
                                     @can('delete', $equipment)
-                                        <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$equipment->id}}">Supprimer</button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$equipment->id}}"><i class="bi bi-trash"></i></button>
                                     @endcan
                                 </div>
                             </div>
@@ -69,14 +69,83 @@
         @endcan
 
         <h2 class="text-2xl font-semibold textcolorhighlight mt-5">Places</h2>
+        @can('create', App\Models\Place::class)
+            <button type="button" class="btn btn-primary p-1 font-semibold" data-bs-toggle="modal" data-bs-target="#createModal">+ Ajouter des places</button>
+            <x-bootstrap.createModal>
+                <x-slot:id>createModal</x-slot>
+                <x-slot:title>Création de places pour le bâtiment {{$building->name}}</x-slot>
+                <x-slot:slot>
+                    <div class="row">
+                        <form action="{{route('places.store', $building->id)}}" method="post">
+                            @csrf
+                            <div class="mb-3 row">
+                                <label for="number" class="form-label">Nombre de places à ajouter :</label>
+                                <input type="number" name="number" id="number" required class="form-control @error('number') is-invalid @enderror" autofocus>
+                                @error('number')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-success btn-sm">Confirmer</button>
+                                </div>
+                                <div class="col-2">
+                                    <span class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Annuler</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </x-slot>
+            </x-bootstrap>
+        @endcan
         @if ($building->places->isEmpty())
             <p class="text-gray-400 mt-2">Aucune place disponible.</p>
         @else
             <ul class="mt-2">
                 @foreach ($building->places as $place)
                     <li class="listdisplay">
-                        <span class="textcolorinfo font-semibold">{{ $place->name }}</span>
+                        <div class="row">
+                            <div class="col-3">
+                                <span class="textcolorinfo font-semibold">{{ $place->name }}</span>
+                            </div>
+                            <div class="col-5">
+                                @if($place->user != null)
+                                    <span>Réservé</span>
+                                @else
+                                    <span>Libre</span>
+                                @endif
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col justify-content-end">
+                                @can('update', $place)
+                                    <a href="{{route('places.edit', $place)}}" class="btn btn-sm btn-outline-warning mb-1"><i class="bi bi-pencil-square"></i></a>
+                                @endcan
+                                @can('delete', $equipment)
+                                    <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$place->id}}"><i class="bi bi-trash"></i></button>
+                                @endcan
+                            </div>
+                        </div>
                     </li>
+                    <x-bootstrap.deleteModal>
+                        <x-slot:id>deleteModal_{{$place->id}}</x-slot>
+                        <x-slot:title>Voulez-vous supprimer la place {{$place->name}} ?</x-slot>
+                        <x-slot:slot>
+                            <div class="row">
+                                <div class="col-1">
+                                    <form action="{{route('places.destroy', $place->id)}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-primary mb-1">Oui</button>
+                                    </form>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Non</button>
+                                </div>
+                            </div>
+                        </x-slot>
+                    </x-bootstrap>
                 @endforeach
             </ul>
         @endif

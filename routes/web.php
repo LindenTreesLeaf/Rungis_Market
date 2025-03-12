@@ -19,14 +19,15 @@ Route::get('/', function () {
 
 Route::resource('buildings', BuildingController::class);
 Route::get('/equipments/create/{building_id}', [EquipmentController::class, 'create'])->name('equipments.create');
-Route::resource('equipments', EquipmentController::class)->except(['create']);
+Route::resource('equipments', EquipmentController::class)->except(['index', 'create']);
 Route::resource('bundles', BundleController::class);
 Route::resource('cards', CardController::class);
 Route::resource('conditions', ConditionController::class);
 Route::resource('orders', OrderController::class);
-Route::resource('places', PlaceController::class);
-Route::resource('types', TypeController::class);
-Route::resource('sectors', SectorController::class);
+Route::post('/places/{building_id}', [PlaceController::class, 'store'])->name('places.store');
+Route::resource('places', PlaceController::class)->only('edit', 'update', 'destroy');
+Route::resource('types', TypeController::class)->only('update');
+Route::resource('sectors', SectorController::class)->only('edit', 'update');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -70,7 +70,6 @@ class RoleSeeder extends Seeder
         $supervisor->givePermissionTo($editEquipment);
         $supervisor->givePermissionTo($deleteEquipment);
         $supervisor->givePermissionTo($editCondition);
-        $supervisor->givePermissionTo($seePlace);
         $supervisor->givePermissionTo($createPlace);
         $supervisor->givePermissionTo($editPlace);
         $supervisor->givePermissionTo($deletePlace);

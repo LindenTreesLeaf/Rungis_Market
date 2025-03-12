@@ -22,7 +22,9 @@ class PlaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:50'],
+            'name' => 'required|max:50',
+            'building_id' => 'required|exists:buildings,id',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 
@@ -41,6 +43,8 @@ class PlaceRequest extends FormRequest
     {
         return [
                 'name' => 'name',
+                'building_id' => 'building_id',
+                'user_id' => 'user_id',
         ];
     }
 

@@ -22,7 +22,7 @@ class EquipmentController extends Controller
     {
         $building = Building::findOrFail($id);
         $this->authorize('create', Equipment::class);
-        return view('equipment.create', ["conditions" => Condition::all(), 'building' => $building]);
+        return view('equipments.create', ["conditions" => Condition::all(), 'building' => $building]);
     }
 
     public function store(EquipmentRequest $request)
@@ -36,14 +36,14 @@ class EquipmentController extends Controller
     {
         $equipment = Equipment::findOrFail($id);
         $this->authorize('view', $equipment);
-        return view('equipment.show', compact('equipment'));
+        return view('equipments.show', compact('equipment'));
     }
 
     public function edit(string $id)
     {
         $equipment = Equipment::findOrFail($id);
         $this->authorize('update', $equipment);
-        return view('equipment.edit', ['equipment' => $equipment, "conditions" => Condition::all(), "building" => $equipment->building]);
+        return view('equipments.edit', ['equipment' => $equipment, "conditions" => Condition::all(), "building" => $equipment->building]);
     }
 
     public function update(EquipmentRequest $request, Equipment $equipment)

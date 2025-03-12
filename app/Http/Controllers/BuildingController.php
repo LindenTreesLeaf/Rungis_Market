@@ -70,7 +70,7 @@ class BuildingController extends Controller
         } else {
             $owner->sector_id = null;
         }
-        return redirect()->route('buildings.show', ['building' => $building]);
+        return redirect()->route('buildings.show', $building);
     }
 
     public function destroy(string $id)
