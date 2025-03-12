@@ -25,7 +25,7 @@ Route::resource('cards', CardController::class);
 Route::resource('conditions', ConditionController::class);
 Route::resource('orders', OrderController::class);
 Route::post('/places/{building_id}', [PlaceController::class, 'store'])->name('places.store');
-Route::resource('places', PlaceController::class)->only('edit', 'update', 'destroy');
+Route::resource('places', PlaceController::class)->except('store', 'create', 'show');
 Route::resource('types', TypeController::class)->only('update');
 Route::resource('sectors', SectorController::class)->only('edit', 'update');
 
