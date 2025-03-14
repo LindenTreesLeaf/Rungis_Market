@@ -16,17 +16,21 @@
                             <th scope="col"><span class="textcolorinfo">Numéro</span></th>
                             <th scope="col"><span class="textcolorinfo">Bâtiment</span></th>
                             <th scope="col"><span class="textcolorinfo">Fin de réservation</span></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($places as $place)
-                            <tr>
-                                <td scope="row">{{ $place->name }}</td>
-                                <td>{{ $place->building->name }}</td>
-                                <td>
-                                    <!-- <a href="{{ route('places.edit', $place->id) }}" class="text-indigo-600 hover:text-indigo-700">Modifier</a> -->
-                                </td>
-                            </tr>
+                            @if($place->reservation->end > date('Y-m-d', mktime(0,0,0,date('m')-1,date('d'),date('Y'))))
+                                <tr>
+                                    <td scope="row">{{ $place->name }}</td>
+                                    <td>{{ $place->building->name }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($place->reservation->end)) }}</td>
+                                    @if(!$place->reserved() && $place->reservation->end < date('Y-m-d'))
+                                        <td><a href="{{route('place.reserve', $place->id)}}" class="btn btn-sm btn-outline-primary mb-1">Re-réserver</a></td>
+                                    @endif
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

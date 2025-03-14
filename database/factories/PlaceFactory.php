@@ -22,7 +22,6 @@ class PlaceFactory extends Factory
         return [
             "name"=>$name,
             "building_id"=>$building->id,
-            "user_id"=>null,
         ];
     }
 }

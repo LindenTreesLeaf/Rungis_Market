@@ -33,6 +33,10 @@ class Building extends Model
         return $this->hasMany(Place::class);
     }
 
+    public function freePlaces(){
+        return $this->places()->whereDoesntHave('users')->count();
+    }
+
     public function equipments(){
         return $this->hasMany(Equipment::class);
     }

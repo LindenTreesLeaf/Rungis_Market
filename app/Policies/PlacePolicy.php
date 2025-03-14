@@ -64,6 +64,10 @@ class PlacePolicy
         return false;
     }
 
+    public function reserve(User $user, Place $place): bool{
+        return $user->hasRole('seller');
+    }
+
     public function before(User $user){
         if($user->hasRole('admin'))
             return true;

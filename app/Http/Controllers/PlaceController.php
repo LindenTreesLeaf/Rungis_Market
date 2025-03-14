@@ -32,13 +32,12 @@ class PlaceController extends Controller
         $building = Building::findOrFail($id);
         $this->authorize('create', Place::class);
         //pour éviter une boucle infinie (c'est du vécu...)
-        $debut = $building->places()->count();
+        $debut = $building->places()->count()+1;
         $fin = $debut + $request->input('number');
         for($i = $debut ; $i < $fin ; $i++)
             $place = Place::create(
                 ['name' => ($building->name).(string)($i),
-                'building_id' => $building->id,
-                'user_id' => null]
+                'building_id' => $building->id,]
             );
         return back();
     }
@@ -59,6 +58,12 @@ class PlaceController extends Controller
     {
         $place = Place::findOrFail($id);
         $place->update($request->validated());
+        if($request->input('user_id') != -1){
+            $user = User::findOrFail($request->input('user_id'));
+            $place->users()->sync([$user->id => ['end' => date('Y-m-d', mktime(0,0,0,date('m'),date('d')+5,date('Y')))]]);
+        }
+        else
+            $place->users()->detach();
         return redirect()->route('buildings.show', $place->building);
     }
 
@@ -68,5 +73,27 @@ class PlaceController extends Controller
         $this->authorize('delete', $place);
         $place->delete();
         return back()->with('success', "Place supprimée avec succès.");
+    }
+
+    public function reserve(string $id){
+        $place = Place::findOrFail($id);
+        $this->authorize('reserve', $place);
+
+        //suppression des réservations de plus d'un mois de la BDD ; à voir si on garde ou pas
+        $expire = date('Y-m-d', mktime(0,0,0,date('m')-1,date('d'),date('Y')));
+        $max = date('Y-m-d', mktime(0,0,0,date('m'),date('d')+5,date('Y')));
+        foreach($place->users as $user){
+            if($user->reservation->end < $expire)
+                $user->places()->wherePivotNotBetween('end', [$expire,$max])->detach($place->id);
+        }
+
+        //réservation
+        $user = Auth::user();
+        if($user->places->count() < 5){
+            $user->places()->attach($place->id, ['end' => $max]);
+            return back()->with('message', "Place réservée avec succès.");
+        }
+        
+        return back();
     }
 }

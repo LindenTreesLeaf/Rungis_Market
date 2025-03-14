@@ -19,8 +19,9 @@
     </div>
 
     <div class="mb-3 row">
-        <label for="user_id" class="form-label">Vendeur : </label>
+        <label for="user_id" class="form-label">Vendeur(euse) : </label>
         <select name="user_id" id="user_id" class="form-select @error('user_id') is-invalid @enderror">
+            <option value="-1">Sélectionner un(e) vendeur(euse)</option>
             @foreach($sellers as $seller)
                 <option value="{{ $seller->id }}">{{ $seller->name }}</option>
             @endforeach

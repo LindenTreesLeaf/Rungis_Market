@@ -17,10 +17,19 @@ class Place extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'user_id', 'building_id'];
+    protected $fillable = ['name', 'building_id'];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function users(){
+        return $this->belongsToMany(User::class)->as('reservation')->withPivot('end');
+    }
+
+    public function reserved(){
+        foreach($this->users as $user){
+            if($user->reservation->end > date('Y-m-d')){
+                return True;
+            }
+        }
+        return False;
     }
 
     public function building(){

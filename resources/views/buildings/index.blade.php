@@ -39,7 +39,7 @@
                                         </p>
                                         @can('view', $building)
                                             <p class="text-body-secondary">Places disponibles : 
-                                                <span class="textcolorinfo">{{ $building->places->count() }}</span>
+                                                <span class="textcolorinfo">{{ $building->freePlaces() }}</span>
                                             </p>
                                         @endcan
 

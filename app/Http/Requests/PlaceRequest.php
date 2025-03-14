@@ -24,10 +24,8 @@ class PlaceRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'building_id' => 'required|exists:buildings,id',
-            'user_id' => 'required|exists:users,id',
         ];
     }
-
 
     public function messages()
     {
@@ -37,7 +35,6 @@ class PlaceRequest extends FormRequest
             'name.max' => 'Le nom du bâtiment ne peut pas dépasser 50 caractères.',
         ];
     }
-
      
     public function attributes() : array
     {

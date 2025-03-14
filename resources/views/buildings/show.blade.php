@@ -3,13 +3,16 @@
 @section('title') Détails du Bâtiment {{ $building->name }} @endsection
 
 @section('content')
+@if(session('message'))
+    <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+@endif
 <x-display-index>
     <x-slot name="title">{{ $building->name }}</x-slot>
     <x-slot name="content">
         <div class="mt-4">
             <p><strong class="textcolorinfo">Type :</strong> {{ $building->type->name }}</p>
             <p><strong class="textcolorinfo">Secteur :</strong> {{ $building->sector->name }}</p>
-            <p><strong class="textcolorinfo">Nombre de places disponibles :</strong> {{ $building->places->count() }}</p>
+            <p><strong class="textcolorinfo">Nombre de places disponibles :</strong> {{ $building->freePlaces() }}</p>
         </div>
 
         @can('viewAny', App\Models\Equipment::class)
@@ -110,17 +113,23 @@
                             <div class="col-3">
                                 <span class="textcolorinfo font-semibold">{{ $place->name }}</span>
                             </div>
-                            <div class="col-5">
-                                @if($place->user != null)
+                            <div class="col-3">
+                                @if($place->users->first() != null)
                                     <span>Réservé</span>
                                 @else
                                     <span>Libre</span>
                                 @endif
                             </div>
-                            <div class="col-2"></div>
+                            <div class="col-4">
+                                @if(!$place->reserved())
+                                    @can('reserve', $place)
+                                        <a href="{{route('place.reserve', $place->id)}}" class="btn btn-sm btn-outline-primary mb-1">Réserver</a>
+                                    @endhasrole
+                                @endif
+                            </div>
                             <div class="col justify-content-end">
                                 @can('update', $place)
-                                    <a href="{{route('places.edit', $place)}}" class="btn btn-sm btn-outline-warning mb-1"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{route('places.edit', $place->id)}}" class="btn btn-sm btn-outline-warning mb-1"><i class="bi bi-pencil-square"></i></a>
                                 @endcan
                                 @can('delete', $equipment)
                                     <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$place->id}}"><i class="bi bi-trash"></i></button>

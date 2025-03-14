@@ -58,7 +58,7 @@ class User extends Authenticatable
     }
 
     public function places(){
-        return $this->hasMany(Place::class);
+        return $this->belongsToMany(Place::class)->as('reservation')->withPivot('end');
     }
 
     public function bundles(){
