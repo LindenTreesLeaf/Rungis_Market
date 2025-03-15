@@ -37,7 +37,7 @@ class CardRequest extends FormRequest
     public function attributes() : array
     {
         return [
-                'tier' => 'tier',
+            'tier' => 'tier',
         ];
     }
 }

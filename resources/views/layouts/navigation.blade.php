@@ -22,6 +22,7 @@
                         {{ __('Nous contacter') }}
                     </x-nav-link>
                     @auth
+                        <x-nav-link :href="route('cards.index')">Abonnements</x-nav-link>
                         @can('viewAny', App\Models\Building::class)
                             <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
                         @endcan

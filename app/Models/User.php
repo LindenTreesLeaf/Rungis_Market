@@ -57,6 +57,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Card::class)->as('subscription')->withPivot('start', 'end');
     }
 
+    public function onGoingSubscription(){
+        $max = date('Y-m-d', mktime(0,0,0,date('m')+2,date('d'),date('Y')));
+        return $this->cards()->wherePivotBetween('end', [date('Y-m-d'), $max]);
+    }
+
+    public function endedSubscription(){
+        $max = date('Y-m-d', mktime(0,0,0,date('m')+2,date('d'),date('Y')));
+        return $this->cards()->wherePivotNotBetween('end', [date('Y-m-d'), $max]);
+    }
+
     public function places(){
         return $this->belongsToMany(Place::class)->as('reservation')->withPivot('end');
     }

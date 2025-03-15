@@ -5,7 +5,7 @@
             <div class="card my-2">
                 <div class="card-body">
                     <div class="row">
-                        <div class="card-title font-semibold mb-4 fs-2 cardtitleborder">
+                        <div class="card-title font-semibold mb-4 cardtitleborder">
                             @isset($title)
                                 {{$title}}
                             @endisset

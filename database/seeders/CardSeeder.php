@@ -23,6 +23,9 @@ class CardSeeder extends Seeder
             'tier' => "Acheteur",
         ]);
         DB::table('cards')->insert([
+            'tier' => "Vendeur",
+        ]);
+        DB::table('cards')->insert([
             'tier' => "Découverte",
         ]);
 
@@ -31,5 +34,17 @@ class CardSeeder extends Seeder
             $card = Card::inRandomOrder()->take(1)->pluck('id');
             $user->cards()->attach($card, ['start'=>date('Y-m-d'), 'end'=>date("Y-m-d", mktime(0, 0, 0, date("m")+1, date("d"),   date("Y")))]);
         }
+
+        $cardi = User::where('name', '=', 'Cardi B')->first();
+        $cardi->cards()->sync(['2' => [
+            'start'=> date('Y-m-d'), 
+            'end' => date('Y-m-d', mktime(0,0,0,date('m'),date('d')+5,date('Y')))
+            ]]);
+
+        $flo = User::where('name', '=', 'Flo Milli')->first();
+        $flo->cards()->sync(['1' => [
+            'start'=> date('Y-m-d'), 
+            'end' => date('Y-m-d', mktime(0,0,0,date('m'),date('d')+5,date('Y')))
+            ]]);
     }
 }
