@@ -72,7 +72,7 @@ class User extends Authenticatable
     }
 
     public function bundles(){
-        return $this->belongsToMany(Bundle::class);
+        return $this->hasMany(Bundle::class);
     }
 
     public function orders(){

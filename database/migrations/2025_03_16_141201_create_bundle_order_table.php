@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bundle_user', function (Blueprint $table) {
-            $table->primary(['bundle_id', 'user_id']);
+        Schema::create('bundle_order', function (Blueprint $table) {
+            $table->primary(['bundle_id', 'order_id']);
             $table->foreignId('bundle_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $table=dropForeign(['bundle_id', 'user_id']);
-        Schema::dropIfExists('bundle_user');
+        $table=dropForeign(['bundle_id', 'order_id']);
+        Schema::dropIfExists('bundle_order');
     }
 };

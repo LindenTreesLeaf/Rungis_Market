@@ -1,65 +1,76 @@
 @extends('layouts.app')
 
-@section('title', 'Détails du Lot')
+@section('title', 'Détails des ventes')
 
 @section('content')
-<div class="container mx-auto p-6">
-    <h1 class="text-2xl font-semibold text-gray-800">Détails du lot</h1>
-
-   
-    @if ($errors->any())
-        <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
-            <strong>Erreur(s) dans le formulaire :</strong>
-            <ul class="list-disc pl-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    
-    <div class="bg-gray-800 p-6 rounded-lg mt-6">
-        <div class="mb-4">
-            <strong class="text-lg text-white">Produit :</strong>
-            <p class="text-gray-400">{{ $bundle->product }}</p>
-        </div>
-
-        <div class="mb-4">
-            <strong class="text-lg text-white">Quantité :</strong>
-            <p class="text-gray-400">{{ $bundle->quantity }} {{ $bundle->unit->name }}</p>
-        </div>
-
-        <div class="mb-4">
-            <strong class="text-lg text-white">Prix :</strong>
-            <p class="text-gray-400">{{ $bundle->price }}€</p>
-        </div>
-
-        <div class="mb-4">
-            <strong class="text-lg text-white">Utilisateur :</strong>
-            <p class="text-gray-400">{{ $bundle->user->name }}</p>
-        </div>
-
-        <div class="mb-4">
-            <strong class="text-lg text-white">Commande :</strong>
-            <p class="text-gray-400">Commande ID: {{ $bundle->order_id }}</p>
-        </div>
-
-        <div class="mb-4">
-            <strong class="text-lg text-white">Unité :</strong>
-            <p class="text-gray-400">{{ $bundle->unit->name }}</p>
-        </div>
-
-        
-        <div class="mt-6 flex justify-between">
-            <a href="{{ route('bundles.edit', $bundle->id) }}" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Modifier</a>
-
-            <form action="{{ route('bundles.destroy', $bundle->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Supprimer</button>
-            </form>
-        </div>
+@if ($errors->any())
+    <div class="alert alert-success" role="alert">
+        <strong>Erreur(s) dans le formulaire :</strong>
+        <ul class="list-disc pl-5">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
-</div>
+@endif
+@if(session('message'))
+    <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+@endif
+<x-display-index>
+    <x-slot name="title">Vos produits</x-slot>
+    <x-slot name="content">
+
+        <a href="{{ route('bundles.create') }}" class="btn btn-primary my-1">+ Créer un Bundle</a>
+
+        @if($bundles->count() == 0)
+            <p class="mt-4">Vous n'avez pas encore créé de lots.</p>
+        @else
+            @foreach ($bundles as $bundle)
+                <div class="contentdisplay my-2">
+                    <span class="font-semibold fs-4 textcolorhighlight">
+                        {{ $bundle->product }}
+                        @can('update', $bundle)
+                            <a href="{{route('bundles.edit', $bundle->id)}}" class="btn btn-sm btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i></a>
+                        @endcan
+                    </span>
+                    <p><strong class="textcolorinfo">Quantité :</strong> {{ $bundle->quantity }} {{ $bundle->unit->name_u }}</p>
+                    <p><strong class="textcolorinfo">Prix :</strong> {{ $bundle->price }}€</p>
+                    @if($bundle->validated == True)
+                        <div class="row">
+                            <div class="col"><strong class="textcolorinfo">En vente</strong></div>
+                            <div class="col-3 justify-content-end"><a href="{{ route('bundle.sell', $bundle->id) }}" class="btn btn-sm btn-outline-dark my-1">Retirer de la vente</a></div>
+                        </div>
+                    @else
+                        <div class="row">
+                            <div class="col"><strong class="textcolorinfo">Non vendu</strong></div>
+                            <div class="col-3 justify-content-end"><a href="{{ route('bundle.sell', $bundle->id) }}" class="btn btn-sm btn-outline-dark my-1">Mettre en vente</a></div>
+                        </div>
+                    @endif
+                    <p><strong class="textcolorinfo">Secteur :</strong> {{ $bundle->sector->name }}</p>
+                    @can('delete', $bundle)
+                        <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$bundle->id}}">Supprimer</button>
+                    @endcan
+                    <x-bootstrap.deleteModal>
+                        <x-slot:id>deleteModal_{{$bundle->id}}</x-slot>
+                        <x-slot:title>Voulez-vous supprimer le lot "{{$bundle->product}}" ?</x-slot>
+                        <x-slot:slot>
+                            <div class="row">
+                                <div class="col-1">
+                                    <form action="{{route('bundles.destroy', $bundle->id)}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-primary mb-1">Oui</button>
+                                    </form>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Non</button>
+                                </div>
+                            </div>
+                        </x-slot>
+                    </x-bootstrap>
+                </div>
+            @endforeach
+        @endif
+    </x-slot>
+</x-display-index>
 @endsection
