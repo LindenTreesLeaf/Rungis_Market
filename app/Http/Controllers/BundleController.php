@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bundle;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Sector;
+use App\Http\Requests\BundleRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BundleController extends Controller
 {
-    public function index()
+    use AuthorizesRequests;
+
+    public function index(string $id)
     {
-        $this->authorize('viewAny', Bundle::class);
-        $bundles = Bundle::all();
+        $sector = Sector::findOrFail($id);
+        $bundles = Bundle::where('sector_id', $sector->id)->get();
         return view('bundles.index', compact('bundles'));
     }
 

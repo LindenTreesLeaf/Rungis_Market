@@ -18,10 +18,10 @@ class Bundle extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['product', 'quantity', 'price', 'user_id', 'order_id', 'unit_id'];
+    protected $fillable = ['product', 'quantity', 'price', 'order_id', 'unit_id'];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function order(){

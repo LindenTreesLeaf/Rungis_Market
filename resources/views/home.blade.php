@@ -25,36 +25,36 @@
                 <div class="row justify-content-center">
                     <div class="col-4 my-3">
                         <div class="contentdisplay">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Fruits et Légumes</h3>
-                            <p class="text-gray-700 dark:text-gray-300 mt-2">Pommes, carottes, salades, tomates, fraises.</p>
+                            <a href="{{route('bundles.index', 1)}}" class="text-lg font-semibold text-gray-900 dark:text-white">Fruits et Légumes</a>
+                            <p class="text-gray-700 dark:text-gray-300 mt-2">Fruits, légumes, salades, champignons,...</p>
                         </div>
                     </div>
 
                     <div class="col-4 my-3">
                         <div class="contentdisplay">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Produits carnés</h3>
-                            <p class="text-gray-700 dark:text-gray-300 mt-2">Bœuf, poulet, poisson frais, fruits de mer.</p>
+                            <a href="{{route('bundles.index', 2)}}" class="text-lg font-semibold text-gray-900 dark:text-white">Produits carnés</a>
+                            <p class="text-gray-700 dark:text-gray-300 mt-2">Bœuf, poulet, charcuterie,...</p>
                         </div>
                     </div>
 
                     <div class="col-4 my-3">
                         <div class="contentdisplay">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Marée</h3>
-                            <p class="text-gray-700 dark:text-gray-300 mt-2">Bœuf, poulet, poisson frais, fruits de mer.</p>
+                            <a href="{{route('bundles.index', 3)}}" class="text-lg font-semibold text-gray-900 dark:text-white">Marée</a>
+                            <p class="text-gray-700 dark:text-gray-300 mt-2">Poissons frais, entiers, fruits de mer,...</p>
                         </div>
                     </div>
 
                     <div class="col-4 my-3">
                         <div class="contentdisplay">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Produits laitiers et de la gastronomie</h3>
-                            <p class="text-gray-700 dark:text-gray-300 mt-2">Lait, fromages, yaourts artisanaux.</p>
+                            <a href="{{route('bundles.index', 4)}}" class="text-lg font-semibold text-gray-900 dark:text-white">Produits laitiers et de la gastronomie</a>
+                            <p class="text-gray-700 dark:text-gray-300 mt-2">Lait, fromages, yaourts artisanaux, huiles, pâtes,...</p>
                         </div>
                     </div>
 
                     <div class="col-4 my-3">
                         <div class="contentdisplay">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Horticulture et décoration</h3>
-                            <p class="text-gray-700 dark:text-gray-300 mt-2">Pains frais, viennoiseries, pâtisseries.</p>
+                            <a href="{{route('bundles.index', 5)}}" class="text-lg font-semibold text-gray-900 dark:text-white">Horticulture et décoration</a>
+                            <p class="text-gray-700 dark:text-gray-300 mt-2">Fleurs fraiches, en pot, séchées, en bouquets,...</p>
                         </div>
                     </div>
                 </div>

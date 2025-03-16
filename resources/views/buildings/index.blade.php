@@ -6,7 +6,7 @@
 <x-display-index>
     <x-slot name="title">Liste des Bâtiments</x-slot>
     <x-slot name="content">
-        @if(Auth::user()->hasRole('admin'))
+        @can('create building')
             <div class="row">
                 <div class="mb-4">
                     <a href="{{ route('buildings.create') }}" class="btn btn-primary p-2 font-semibold">
@@ -14,7 +14,7 @@
                     </a>
                 </div>
             </div>
-        @endif
+        @endcan
 
         <div>
             @foreach($sectors as $sector)

@@ -18,7 +18,6 @@ class BundleFactory extends Factory
      */
     public function definition(): array
     {
-        $user = User::role('seller')->first();
         $unit = Unit::inRandomOrder()->first();
         $products = [
             "Pommes" => 1, "Harricots verts" => 1, "Cerises" => 1, "Brocolis" => 1, "Truffes entières" => 1, "Igname" => 1, "Courgettes" => 1, "Courgettes rondes" => 1, "Aubergines" => 1, "Concombres" => 1, "Pousse de Soja" => 1,
@@ -35,7 +34,6 @@ class BundleFactory extends Factory
             "quantity"=>fake()->numberBetween(5,100),
             "price"=>fake()->randomFloat(2),
             "validated"=>fake()->boolean(),
-            "user_id"=>$user->id,
             "order_id"=>null,
             "unit_id"=>$unit->id,
             "sector_id"=>$sector,

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Bundle;
+use App\Models\User;
 
 class BundleSeeder extends Seeder
 {
@@ -18,5 +19,11 @@ class BundleSeeder extends Seeder
         DB::table('bundles')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Bundle::factory()->count(50)->create();
+
+        $sellers = User::role('seller')->get();
+        foreach(Bundle::all() as $bundle){
+            $seller = fake()->randomElement($sellers);
+            $seller->bundles()->attach($bundle->id);
+        }
     }
 }
