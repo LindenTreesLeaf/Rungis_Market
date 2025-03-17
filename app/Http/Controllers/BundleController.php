@@ -23,13 +23,14 @@ class BundleController extends Controller
     public function create()
     {
         $this->authorize('create', Bundle::class);
-        return view('buildings.index', ['sectors' => Sector::all()]);
+        return view('bundles.create', ['sectors' => Sector::all()]);
     }
 
     public function store(BundleRequest $request)
     {
+        $request->merge(['user_id', Auth::user()->id]);
         $bundle = Bundle::create($request->validated());
-        return redirect()->route('bundles.show', ['bundle' => $bundle]);
+        return redirect()->route('bundles.show', Auth::user()->id);
     }
 
     public function show(string $id)
