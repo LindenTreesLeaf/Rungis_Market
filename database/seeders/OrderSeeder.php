@@ -23,8 +23,7 @@ class OrderSeeder extends Seeder
         foreach(Bundle::all() as $bundle) {
             if(fake()->boolean(40)){
                 $order = Order::inRandomOrder()->first();
-                $bundle->order()->associate($order);
-                $bundle->save();
+                $bundle->order()->attach($order->id);
             }
         }
     }

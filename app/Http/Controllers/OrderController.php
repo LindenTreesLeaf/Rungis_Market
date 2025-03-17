@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\OrderRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class OrderController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $user = Auth::user();
         $this->authorize('viewAny', Order::class);
-        $orders = Order::validated();
-        return view('orders.index', compact('orders'));
+        $passedOrders = $user->passedOrders();
+        $ongoingOrders = $user->ongoingOrders();
+        return view('orders.index', ['passedOrders' => $passedOrders, 'ongoingOrders' => $ongoingOrders]);
     }
 
     public function create()
@@ -27,9 +33,10 @@ class OrderController extends Controller
         return redirect()->route('orders.show', ['order' => $order]);
     }
 
-    public function show(Order $order)
+    public function show(string $id)
     {
-        $this->authorize('viewAny', $order);
+        $order = Order::findOrFail($id);
+        $this->authorize('view', $order);
         return view('orders.show', compact('order'));
     }
 

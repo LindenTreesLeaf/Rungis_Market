@@ -18,18 +18,29 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('buildings', BuildingController::class);
-Route::get('/equipments/create/{building_id}', [EquipmentController::class, 'create'])->name('equipments.create');
-Route::resource('equipments', EquipmentController::class)->except(['index', 'create']);
-Route::resource('bundles', BundleController::class);
+
+Route::get('bundles/{sector_id}', [BundleController::class, 'index'])->name('bundles.index');
+Route::get('bundles/sales/{user_id}', [BundleController::class, 'show'])->name('bundles.show');
+Route::get('bundles/sell/{bundle_id}', [BundleController::class, 'sell'])->name('bundle.sell');
+Route::resource('bundles', BundleController::class)->except('index', 'show');
+
 Route::get('/card/{card_id}/reserve', [CardController::class, 'reserve'])->name('card.reserve');
 Route::get('/card/{card_id}/resign', [CardController::class, 'resign'])->name('card.resign');
 Route::resource('cards', CardController::class)->except('edit', 'show', 'create');
+
 Route::resource('conditions', ConditionController::class)->only('update');
+
+Route::get('/equipments/create/{building_id}', [EquipmentController::class, 'create'])->name('equipments.create');
+Route::resource('equipments', EquipmentController::class)->except('index', 'create');
+
 Route::resource('orders', OrderController::class);
+
 Route::post('/places/{building_id}', [PlaceController::class, 'store'])->name('places.store');
 Route::get('/place/{place_id}/reserve', [PlaceController::class, 'reserve'])->name('place.reserve');
 Route::resource('places', PlaceController::class)->except('store', 'create', 'show');
+
 Route::resource('types', TypeController::class)->only('update');
+
 Route::resource('sectors', SectorController::class)->only('edit', 'update');
 
 Route::middleware('auth')->group(function () {

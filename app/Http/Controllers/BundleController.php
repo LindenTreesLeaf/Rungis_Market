@@ -4,51 +4,74 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bundle;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Sector;
+use App\Models\User;
+use App\Http\Requests\BundleRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BundleController extends Controller
 {
-    public function index()
+    use AuthorizesRequests;
+
+    public function index(string $id)
     {
-        $this->authorize('viewAny', Bundle::class);
-        $bundles = Bundle::all();
+        $sector = Sector::findOrFail($id);
+        $bundles = Bundle::where('sector_id', $sector->id)->get();
         return view('bundles.index', compact('bundles'));
     }
 
     public function create()
     {
         $this->authorize('create', Bundle::class);
-        return view('bundles.create');
+        return view('bundles.create', ['sectors' => Sector::all()]);
     }
 
-    public function store(Request $request)
+    public function store(BundleRequest $request)
     {
+        $request->merge(['user_id', Auth::user()->id]);
         $bundle = Bundle::create($request->validated());
-        return redirect()->route('bundles.show', ['bundle' => $bundle]);
+        return redirect()->route('bundles.show', Auth::user()->id);
     }
 
-    public function show(Bundle $bundle)
+    public function show(string $id)
     {
-        $this->authorize('view', $bundle);
-        return view('bundles.show', compact('bundle'));
+        $user = User::findOrFail($id);
+        $this->authorize('view', Bundle::class);
+        $bundles = $user->bundles;
+        return view('bundles.show', compact('bundles'));
     }
 
-    public function edit(Bundle $bundle)
+    public function edit(string $id)
     {
+        $bundle = Bundle::findOrFail($id);
         $this->authorize('update', $bundle);
-        return view('bundles.edit', compact('bundle'));
+        return view('bundles.edit', ['bundle' => $bundle, 'sectors' => Sector::all()]);
     }
 
-    public function update(Request $request, Bundle $bundle)
+    public function update(BundleRequest $request, string $id)
     {
-        $bundle->update($request->validated());
-        return redirect()->route('bundles.show', ['bundle' => $bundle]);
+        $bundle = Bundle::findOrFail($id);
+        $validated = $request->validated();
+        $bundle->update($validated);
+        return redirect()->route('bundles.show', $bundle->user->id);
     }
 
-    public function destroy(Bundle $bundle)
+    public function destroy(string $id)
     {
+        $bundle = Bundle::findOrFail($id);
         $this->authorize('delete', $bundle);
         $bundle->delete();
-        return redirect()->route('bundles.index')->with('success', "Bundle supprimé avec succès.");
+        return back()->with('message', "Bundle supprimé avec succès.");
+    }
+
+    public function sell(string $id){
+        $bundle = Bundle::findOrFail($id);
+        $this->authorize('sell', $bundle);
+        $bundle->validated = !$bundle->validated;
+        $bundle->save();
+        if($bundle->validated == 1)
+            return back()->with('message', "Produit mis en vente.");
+        else
+            return back()->with('message', "Produit retiré de la vente.");
     }
 }

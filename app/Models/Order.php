@@ -23,8 +23,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bundle(){
-        return $this->hasMany(Bundle::class);
+    public function bundles(){
+        return $this->belongsToMany(Bundle::class);
     }
 
     public function state(){

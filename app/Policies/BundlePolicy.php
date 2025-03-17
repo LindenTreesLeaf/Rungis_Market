@@ -13,15 +13,15 @@ class BundlePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Bundle $bundle): bool
+    public function view(User $user): bool
     {
-        return $user->bundles->contains($bundle->user_id);
+        return $user->hasRole('seller');
     }
 
     /**
@@ -62,6 +62,11 @@ class BundlePolicy
     public function forceDelete(User $user, Bundle $bundle): bool
     {
         return false;
+    }
+
+    public function sell(User $user, Bundle $bundle): bool{
+        $res = $user->bundles()->where('id', $bundle->id)->get();
+        return $res->count() > 0;
     }
 
     public function before(User $user){

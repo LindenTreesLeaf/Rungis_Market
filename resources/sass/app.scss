@@ -34,3 +34,23 @@ $primary: #d91818;
 .textcolorhighlight{
     color: #bb3333;
 }
+
+.maintitle{
+    @extend .text-center;
+    @extend .fs-1;
+    @extend .fw-bold;
+    color: #212529;
+}
+
+.subtitle{
+    @extend .text-center;
+    @extend .fs-5;
+    @extend .mt-2;
+    color: #495057;
+}
+
+.sectiontitle{
+    @extend .fw-semibold;
+    @extend .fs-4;
+    color: #343a40;
+}

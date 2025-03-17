@@ -18,15 +18,14 @@ class BundleFactory extends Factory
      */
     public function definition(): array
     {
-        $user = User::inRandomOrder()->first(); //récupérer les vendeurs plutôt que n'importe quel utilisateur
+        $users = User::role('seller')->get();
         $unit = Unit::inRandomOrder()->first();
-
         $products = [
-            "Pommes" => 1, "Harricots verts" => 1, "Cerises" => 1, "Brocolis" => 1,
-            "Poulet" => 2, "Cuisse de bœuf" => 2, "Steak de bœuf" => 2, "Merguez" => 2, "Saucisse aux herbes" => 2,
-            "Saumon" => 3, "Truite" => 3, "Colin" => 3, "Crevettes" => 3, "Poulpe cru" => 3, "Haddock fumé" => 3,
-            "Lait de vache" => 4, "Lait de brebis" => 4, "Tomme de Savoie" => 4, "Brie à la truffe" => 4, "Saint Marcellin" => 4, "Spaghetti" => 4, "Cannelloni" => 4,
-            "Roses" => 5, "Boîte à Pizza 29*29*4" => 5, "Jonquilles" => 5, "Sel Pastilles Pour Adoucisseur D'Eau" => 5, "Eau de javel 2,6%" => 5,
+            "Pommes" => 1, "Harricots verts" => 1, "Cerises" => 1, "Brocolis" => 1, "Truffes entières" => 1, "Igname" => 1, "Courgettes" => 1, "Courgettes rondes" => 1, "Aubergines" => 1, "Concombres" => 1, "Pousse de Soja" => 1,
+            "Sauté d'Agneau" => 2, "Souris d'Agneau" => 2, "Terrine Foie Gras mi-cuit" => 2, "Manchon de Canard" => 2, "Jambon Cuit à la Truffe" => 2, "Saucisson Sec Court d'Auvergne" => 2,
+            "Chute de Saumon Fumée" => 3, "Truite fumée tranché" => 3, "Bar Élevage" => 3, "Crevettes Rose Cuite" => 3, "Tentacules de Poulpe cuits" => 3, "Salade de Calamar à la niçoise" => 3, "Corail d'Oursin Pur" => 3,
+            "Lait de vache" => 4, "Lait de brebis" => 4, "Tomme de Savoie" => 4, "Brie à la truffe" => 4, "Saint Marcellin" => 4, "Spaghetti" => 4, "Cannelloni" => 4, "Huile d'Olive Extra Vierge" => 4, "Pain burger premium sésame" => 4, "Tapenade Piment d'Espelette" => 4,
+            "Roses rouges coupées" => 5, "Jonquilles en pot" => 5, "Lys en bouquet" => 5, "Orchidées séchées" => 5, "Pensées en pot" => 5,
         ];
         $product = fake()->randomElement(array_keys($products));
         $sector = $products[$product];
@@ -36,8 +35,7 @@ class BundleFactory extends Factory
             "quantity"=>fake()->numberBetween(5,100),
             "price"=>fake()->randomFloat(2),
             "validated"=>fake()->boolean(),
-            "user_id"=>$user->id,
-            "order_id"=>null,
+            "user_id"=>fake()->randomElement($users)->id,
             "unit_id"=>$unit->id,
             "sector_id"=>$sector,
         ];

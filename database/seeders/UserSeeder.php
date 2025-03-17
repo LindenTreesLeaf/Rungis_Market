@@ -62,5 +62,10 @@ class UserSeeder extends Seeder
 
 
         User::factory()->count(10)->create();
+
+        for($i = 0 ; $i < 10 ; $i++){
+            $user = User::factory()->create();
+            $user->assignRole('seller');
+        }
     }
 }

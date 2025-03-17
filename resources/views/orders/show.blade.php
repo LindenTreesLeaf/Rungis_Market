@@ -1,41 +1,44 @@
 @extends('layouts.app')
 
+@section('title') Détail de commande @endsection
+
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <h1 class="text-center text-purple-600 text-3xl font-bold mb-6">Détails de la Commande #{{ $order->id }}</h1>
-
-    <div class="bg-black text-white p-6 rounded-lg shadow-md">
-        <div class="mb-4">
-            <strong>Client :</strong> {{ $order->user->name }}
+<x-display-index>
+    <x-slot name="title">Détails de la commande #{{ $order->id }}</x-slot>
+    <x-slot name="content">
+        <div class="row">
+            <div class="row">
+                <div class="col-3"><strong class="textcolorinfo">Statut : </strong></div>
+                <div class="col">{{ $order->state->name }}</div>
+            </div>
+            <div class="row">
+                <div class="col-3"><strong class="textcolorinfo">Date de Commande : </strong></div>
+                @if($order->state->id != 1)
+                    <div class="col">{{ date('Y-m-d', strtotime($order->date_passed)) }}</div>
+                @else
+                    <div class="col"><span class="text-gray-500">N/A</span></div>
+                @endif
+            </div>
+            <div class="row">
+                <div class="col-3"><strong class="textcolorinfo">Date de Retrait : </strong></div>
+                @if($order->state->id != 1 && $order->state->id != 4)
+                    <div class="col">{{ date('Y-m-d', strtotime($order->date_retreive)) }}</div>
+                @else
+                    <div class="col"><span class="text-gray-500">N/A</span></div>
+                @endif
+            </div>
+            <div class="row">
+                <strong class="textcolorinfo">Produits Commandés : </strong>
+                <ul class="mt-2">
+                    @foreach($order->bundles as $bundle)
+                        <li class="listdisplay"><span class="textcolorinfo">{{ $bundle->product }}</span> - {{ $bundle->quantity }}{{ $bundle->unit->name_u }} - {{ $bundle->price }}€</li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-
-        <div class="mb-4">
-            <strong>Statut :</strong>
-            <span class="px-3 py-1 rounded-full {{ $order->statut == 'En cours' ? 'bg-purple-600' : 'bg-green-600' }} text-white">{{ $order->statut }}</span>
+        <div class="row">
+            <div class="col-2"><a href="{{ route('orders.index') }}" class="btn btn-outline-dark">Retour</a></div>
         </div>
-
-        <div class="mb-4">
-            <strong>Date de Commande :</strong> {{ $order->created_at->format('d/m/Y') }}
-        </div>
-
-        <div class="mb-4">
-            <strong>Produits Commandés :</strong>
-            <ul class="list-disc pl-6">
-                @foreach($order->products as $product)
-                    <li>{{ $product->nom }} - {{ $product->pivot->quantity }} x {{ $product->prix }} €</li>
-                @endforeach
-            </ul>
-        </div>
-
-        <div class="mb-4">
-            <strong>Total :</strong> {{ $order->total }} €
-        </div>
-
-        <div class="text-center">
-            <a href="{{ route('orders.index') }}" class="bg-purple-600 text-white hover:bg-purple-700 px-6 py-2 rounded-lg transition duration-300">
-                Retour à la Liste des Commandes
-            </a>
-        </div>
-    </div>
-</div>
+    </x-slot>
+</x-display-index>
 @endsection
