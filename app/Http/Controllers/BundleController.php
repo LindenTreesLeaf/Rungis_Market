@@ -57,9 +57,10 @@ class BundleController extends Controller
 
     public function destroy(string $id)
     {
+        $bundle = Bundle::findOrFail($id);
         $this->authorize('delete', $bundle);
         $bundle->delete();
-        return redirect()->route('bundles.index')->with('success', "Bundle supprimé avec succès.");
+        return back()->with('message', "Bundle supprimé avec succès.");
     }
 
     public function sell(string $id){
