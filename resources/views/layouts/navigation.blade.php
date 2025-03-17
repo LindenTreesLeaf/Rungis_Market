@@ -30,6 +30,9 @@
                             <x-nav-link :href="route('places.index')">Réservations</x-nav-link>
                             <x-nav-link :href="route('bundles.show', Auth::user()->id)">Ventes</x-nav-link>
                         @endhasrole
+                        @hasrole('client')
+                            <x-nav-link :href="route('orders.index')">Commandes</x-nav-link>
+                        @endhasrole
                     @endauth
                 </div>
             </div>

@@ -44,9 +44,11 @@
                                         @endcan
 
                                         <div class="mt-4 flex space-x-2">
-                                            <a href="{{ route('buildings.show', $building->id) }}" class="btn btn-outline-success p-1">
-                                                Détail
-                                            </a>
+                                            @can('view', $building)
+                                                <a href="{{ route('buildings.show', $building->id) }}" class="btn btn-outline-success p-1">
+                                                    Détail
+                                                </a>
+                                            @endcan
                                             @can('update', $building)
                                                 <a href="{{ route('buildings.edit', $building->id) }}" class="btn btn-outline-warning p-1">
                                                     Modifier

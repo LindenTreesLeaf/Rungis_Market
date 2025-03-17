@@ -1,46 +1,86 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container mx-auto px-4 py-6">
-    <h1 class="text-center text-purple-600 text-3xl font-bold mb-6">Liste des Commandes</h1>
+@section('title') Commandes @endsection
 
-    <div class="bg-black text-white p-6 rounded-lg shadow-md">
-        @if($orders->isEmpty())
-            <p class="text-gray-400">Aucune commande en cours.</p>
-        @else
-            <table class="table-auto w-full text-left text-gray-200">
+@section('content')
+@if(session('message'))
+    <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+@endif
+<x-display-index>
+    <x-slot name="title">Vos commandes en cours</x-slot>
+    <x-slot name="content">
+        @if(count($ongoingOrders) > 0)
+            <table class="table">
                 <thead>
                     <tr>
-                        <th class="py-2 px-4">Numéro de Commande</th>
-                        <th class="py-2 px-4">Client</th>
-                        <th class="py-2 px-4">Statut</th>
-                        <th class="py-2 px-4">Date</th>
-                        <th class="py-2 px-4">Actions</th>
+                        <th scope="col"><span class="textcolorinfo">Numéro de Commande</span></th>
+                        <th scope="col"><span class="textcolorinfo">Statut</span></th>
+                        <th scope="col"><span class="textcolorinfo">Date commande</span></th>
+                        <th scope="col"><span class="textcolorinfo">Date récupération</span></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($orders as $order)
+                    @foreach($ongoingOrders as $order)
                         <tr>
-                            <td class="py-2 px-4">{{ $order->id }}</td>
-                            <td class="py-2 px-4">{{ $order->user->name }}</td>
-                            <td class="py-2 px-4">
-                                <span class="px-3 py-1 rounded-full {{ $order->statut == 'En cours' ? 'bg-purple-600' : 'bg-green-600' }} text-white">{{ $order->statut }}</span>
-                            </td>
-                            <td class="py-2 px-4">{{ $order->created_at->format('d/m/Y') }}</td>
-                            <td class="py-2 px-4">
-                                <a href="{{ route('orders.show', $order->id) }}" class="text-purple-500 hover:underline">Voir</a>
-                                |
-                                <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:underline" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?')">Annuler</button>
-                                </form>
-                            </td>
+                            <td scope="row">{{ $order->id }}</td>
+                            <td>{{ $order->state->name }}
+                            @if($order->state->id == 2)
+                                <td>{{ date('Y-m-d', strtotime($order->date_passed)) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($order->date_retreive)) }}</td>
+                            @else
+                                <td><span class="text-gray-500">N/A</span></td>
+                                <td><span class="text-gray-500">N/A</span></td>
+                            @endif
+                            @can('view', $order)
+                                <td><a href="{{route('orders.show', $order)}}" class="btn btn-sm btn-primary mb-1"><i class="bi bi-eye"></i></a></td>
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+        @else
+            <div class="row"><span>Vous n'avez aucune commande en cours pour le moment.</span></div>
         @endif
-    </div>
-</div>
+    </x-slot>
+</x-display-index>
+
+<x-display-index>
+    <x-slot name="title">Vos commandes passées</x-slot>
+    <x-slot name="content">
+        @if(count($passedOrders) > 0)
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="textcolorinfo">Numéro de Commande</span></th>
+                        <th scope="col"><span class="textcolorinfo">Statut</span></th>
+                        <th scope="col"><span class="textcolorinfo">Date commande</span></th>
+                        <th scope="col"><span class="textcolorinfo">Date récupération</span></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($passedOrders as $order)
+                        <tr>
+                            <td scope="row">{{ $order->id }}</td>
+                            <td>{{ $order->state->name }}
+                            @if($order->state->id == 3)
+                                <td>{{ date('Y-m-d', strtotime($order->date_passed)) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($order->date_retreive)) }}</td>
+                            @else
+                                <td><span class="text-gray-500">{{ date('Y-m-d', strtotime($order->date_passed)) }}</span></td>
+                                <td><span class="text-gray-500">N/A</span></td>
+                            @endif
+                            @can('view', $order)
+                                <td><a href="{{route('orders.show', $order)}}" class="btn btn-sm btn-primary mb-1"><i class="bi bi-eye"></i></a></td>
+                            @endcan
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <div class="row"><span>Vous n'avez aucune commande passée.</span></div>
+        @endif
+    </x-slot>
+</x-display-index>
 @endsection

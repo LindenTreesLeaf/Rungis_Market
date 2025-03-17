@@ -78,4 +78,24 @@ class User extends Authenticatable
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    public function passedOrders(){
+        //return $this->orders()->where('state_id', 3)->orWhere('state_id', 4)->get();
+        //ne fonctionne pas : toutes les commandes de la BDD sont retournées
+        $orders = [];
+        foreach($this->orders as $order){
+            if($order->state->id == 3 || $order->state->id == 4)
+                $orders[] = $order;
+        }
+        return $orders;
+    }
+
+    public function ongoingOrders(){
+        $orders = [];
+        foreach($this->orders as $order){
+            if($order->state->id == 1 || $order->state->id == 2)
+                $orders[] = $order;
+        }
+        return $orders;
+    }
 }
