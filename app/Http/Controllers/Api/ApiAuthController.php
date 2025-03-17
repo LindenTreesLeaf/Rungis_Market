@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 
 class ApiAuthController extends Controller {
+
+
+    public function test(){
+        addNotification(User::get()[0],"coucou", "ceci est un super message");
+    }
 
     public function store(Request $request){
 
@@ -48,7 +54,15 @@ class ApiAuthController extends Controller {
 
 
             if(count($tokenExist) == 1){
-                $out = ["error" => 0];
+                
+
+                $roles = DB::table("model_has_roles")
+                            ->select("roles.name")
+                            ->where("model_id", "=", $tokenExist[0]->user_id)
+                            ->join("roles","roles.id","=", "model_has_roles.role_id")
+                            ->get();
+
+                $out = ["error" => 0,"roles" => $roles];
             }
 
         }else{

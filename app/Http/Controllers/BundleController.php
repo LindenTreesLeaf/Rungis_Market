@@ -22,6 +22,7 @@ class BundleController extends Controller
 
     public function create()
     {
+
         $this->authorize('create', Bundle::class);
         return view('bundles.create', ['sectors' => Sector::all()]);
     }

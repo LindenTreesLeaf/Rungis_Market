@@ -83,7 +83,8 @@ class ApiOrdersController extends Controller {
 
 
     public function validateOrder(Request $request){
-        if($request->has('token') && $request->has("ordercode") && $request->has("updatecode")){
+        
+        if($request->has('token') && $request->has("ordercode")){
             
 
             $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
@@ -92,26 +93,37 @@ class ApiOrdersController extends Controller {
             if(count($tokenExist) == 1){
 
                 
+                $user = User::where('users.id', '=', $tokenExist[0]->user_id)
+                                ->get()[0];
 
-                $orderExist = Bundle::where('bundles.user_id', '=', $tokenExist[0]->user_id)
+
+                if($user->hasRole("supervisor")){
+
+                    $orderExist = Order::where('orders.id',"=", $request->get("ordercode"))
+                                        ->get();
+
+                    /*$orderExist = Bundle::where('bundles.user_id', '=', $tokenExist[0]->user_id)
                             ->join("orders","bundles.order_id", "orders.id")
                             ->where("orders.id", "=", $request->get("ordercode"))
                             ->get();
+                            */
 
-                if(count($orderExist) >= 1){
-
-
-                    $tmp = Order::where("orders.id", "=", $request->get("ordercode"))
-                            ->update(["state_id" => $request->get("updatecode")]);
+                    if(count($orderExist) >= 1){
 
 
-                    $out = ['error' => 0];
+                        $tmp = Order::where("orders.id", "=", $request->get("ordercode"))
+                                ->update(["state_id" => 3]);
+
+
+                        $out = ['error' => 0];
+                    }else{
+                        $out = ['error' => 4, 'test' => $orderExist];
+                    }
+
+
                 }else{
-                    $out = ['error' => 4];
+                    $out = ['error' => 5];
                 }
-
-
-
 
                 
 

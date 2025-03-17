@@ -18,6 +18,9 @@ Route::middleware('api')->group(function () {
     Route::post('api/orders/update',[ApiOrdersController::class, 'validateOrder']);
 
 
+    Route::get('api/test', [ApiAuthController::class, "test"]);
+
+
     
 
 
