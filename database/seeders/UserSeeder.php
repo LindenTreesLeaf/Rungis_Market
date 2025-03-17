@@ -52,6 +52,15 @@ class UserSeeder extends Seeder
         $flo = User::where('name', '=', 'Flo Milli')->first();
         $flo->assignRole('client');
 
+        //Utilisateur de test avec tous les roles
+        User::factory()->create([
+            'name' => 'test',
+            'email' => "t@t.t",
+        ]);
+        $test = User::where('name', '=', 'test')->first();
+        $test->assignRole(['client','seller','supervisor']);
+
+
         User::factory()->count(10)->create();
     }
 }
