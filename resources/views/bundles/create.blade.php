@@ -15,7 +15,7 @@
     <x-display-index>
         <x-slot name="title">Ajouter un produit</x-slot>
         <x-slot name="content">
-            <x-bundle-form routeRetour="{{route('bundles.show', Auth::user()->id)}}" routeValider="{{route('bundles.store')}}" :sectors=$sectors></x-bundle-form>
+            <x-bundle-form routeRetour="{{route('bundles.show', Auth::user()->id)}}" routeValider="{{route('bundles.store')}}" :sectors=$sectors :units=$units></x-bundle-form>
         </x-slot>
     </x-display-index>
 @endsection

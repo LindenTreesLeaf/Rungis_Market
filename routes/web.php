@@ -19,12 +19,10 @@ Route::get('/', function () {
 
 Route::resource('buildings', BuildingController::class);
 
-
 Route::resource('bundles', BundleController::class)->except('index', 'show');
 Route::get('bundles/{sector_id}', [BundleController::class, 'index'])->name('bundles.index');
 Route::get('bundles/sales/{user_id}', [BundleController::class, 'show'])->name('bundles.show');
 Route::get('bundles/sell/{bundle_id}', [BundleController::class, 'sell'])->name('bundle.sell');
-
 
 Route::get('/card/{card_id}/reserve', [CardController::class, 'reserve'])->name('card.reserve');
 Route::get('/card/{card_id}/resign', [CardController::class, 'resign'])->name('card.resign');

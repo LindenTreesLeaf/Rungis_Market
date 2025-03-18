@@ -27,6 +27,7 @@ class BundleRequest extends FormRequest
             'price' => ['required', 'min:0.01'],
             'validated' => ['required','boolean'],
             'sector_id' => ['required', 'exists:sectors,id'],
+            'unit_id' => ['required', 'exists:units,id'],
         ];
     }
 

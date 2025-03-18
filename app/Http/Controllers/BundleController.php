@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bundle;
 use App\Models\Sector;
+use App\Models\Unit;
 use App\Models\User;
 use App\Http\Requests\BundleRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BundleController extends Controller
@@ -24,13 +26,14 @@ class BundleController extends Controller
     {
 
         $this->authorize('create', Bundle::class);
-        return view('bundles.create', ['sectors' => Sector::all()]);
+        return view('bundles.create', ['sectors' => Sector::all(), 'units' => Unit::all()]);
     }
 
     public function store(BundleRequest $request)
     {
-        $request->merge(['user_id', Auth::user()->id]);
-        $bundle = Bundle::create($request->validated());
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::user()->id;
+        $bundle = Bundle::create($validated);
         return redirect()->route('bundles.show', Auth::user()->id);
     }
 
@@ -46,7 +49,7 @@ class BundleController extends Controller
     {
         $bundle = Bundle::findOrFail($id);
         $this->authorize('update', $bundle);
-        return view('bundles.edit', ['bundle' => $bundle, 'sectors' => Sector::all()]);
+        return view('bundles.edit', ['bundle' => $bundle, 'sectors' => Sector::all(), 'units' => Unit::all()]);
     }
 
     public function update(BundleRequest $request, string $id)
@@ -54,6 +57,14 @@ class BundleController extends Controller
         $bundle = Bundle::findOrFail($id);
         $validated = $request->validated();
         $bundle->update($validated);
+        if($validated['validated'] == 1){
+            $bundle->validated = 1;
+            $bundle->save();
+        }
+        else{
+            $bundle->validated = 0;
+            $bundle->save();
+        }
         return redirect()->route('bundles.show', $bundle->user->id);
     }
 
