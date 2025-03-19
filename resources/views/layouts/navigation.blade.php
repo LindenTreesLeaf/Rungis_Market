@@ -22,16 +22,16 @@
                         {{ __('Nous contacter') }}
                     </x-nav-link>
                     @auth
-                        <x-nav-link :href="route('cards.index')">Abonnements</x-nav-link>
+                        <x-nav-link :href="route('cards.index')" :active="request()->routeIs('cards.index')">Abonnements</x-nav-link>
                         @can('viewAny', App\Models\Building::class)
-                            <x-nav-link :href="route('buildings.index')">Bâtiments</x-nav-link>
+                            <x-nav-link :href="route('buildings.index')" :active="request()->routeIs('buildings.index')">Bâtiments</x-nav-link>
                         @endcan
                         @hasrole('seller')
-                            <x-nav-link :href="route('places.index')">Réservations</x-nav-link>
-                            <x-nav-link :href="route('bundles.show', Auth::user()->id)">Ventes</x-nav-link>
+                            <x-nav-link :href="route('places.index')" :active="request()->routeIs('places.index')">Réservations</x-nav-link>
+                            <x-nav-link :href="route('bundles.show', Auth::user()->id)" :active="request()->routeIs('bundles.show')">Ventes</x-nav-link>
                         @endhasrole
                         @hasrole('client')
-                            <x-nav-link :href="route('orders.index')">Commandes</x-nav-link>
+                            <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">Commandes</x-nav-link>
                         @endhasrole
                     @endauth
                 </div>

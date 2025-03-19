@@ -65,8 +65,15 @@ class BundlePolicy
     }
 
     public function sell(User $user, Bundle $bundle): bool{
-        $res = $user->bundles()->where('id', $bundle->id)->get();
-        return $res->count() > 0;
+        return $user->bundles()->where('id', $bundle->id)->get()->count() > 0;
+    }
+
+    public function buy(User $user, Bundle $bundle): bool{
+        foreach($user->cards()->where('id', 1)->get() as $card){
+            if($card->subscription->end > date('Y-m-d') && $bundle->validated == 1 && $user->hasRole('client'))
+                return True;
+        }
+        return False;
     }
 
     public function before(User $user){
