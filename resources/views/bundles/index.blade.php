@@ -22,6 +22,15 @@
                         </div>
                         <div class="col">
                             <!--Image ?-->
+                                <div class="flex-shrink-0">
+                                    @if($bundle->product == "Orchidées séchées") 
+                                    <img srcset="<?php echo asset('images/orchidees-sechees-150.png') ?> 150w,
+                                        <?php echo asset('images/orchidees-sechees-120.png') ?> 120w,
+                                        <?php echo asset('images/orchidees-sechees-100.png') ?> 100w"
+                                        sizes=" (max-width: 120px) 100px, 120px"
+                                        src="<?php echo asset('images/orchidees-sechees-120.png')?> "  title="Orchidées séchées" class="object-cover rounded-lg shadow w-32 h-32">
+                                    @endif
+                                </div>
                         </div>
                     </div>
                 </div>
