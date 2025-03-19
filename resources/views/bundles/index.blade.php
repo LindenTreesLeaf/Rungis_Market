@@ -3,6 +3,9 @@
 @section('title', 'Produits')
 
 @section('content')
+@if(session('message'))
+    <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+@endif
 <x-display-index>
     <x-slot name="title">Produits à retrouver sur le Marché</x-slot>
     <x-slot name="content">
@@ -15,7 +18,7 @@
                             <p><srtong class="text-gray-500 mb-4">Quantité :</strong> {{ $bundle->quantity }}</p>
                             <p><strong class="text-gray-500 mb-4">Prix :</strong> {{ number_format($bundle->price, 2) }} €</p>
                             @if($bundle->validated == 1)
-                                <a href="#" class="btn btn-primary btn-sm">Commander</a>
+                                <a href="{{route('order.addToCart', $bundle->id)}}" class="btn btn-primary btn-sm">Commander</a>
                             @else
                                 <span class="btn btn-outline-dark btn-sm">Rutpture de stock</span>
                             @endif

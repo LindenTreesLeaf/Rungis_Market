@@ -31,7 +31,33 @@
                 <strong class="textcolorinfo">Produits Commandés : </strong>
                 <ul class="mt-2">
                     @foreach($order->bundles as $bundle)
-                        <li class="listdisplay"><span class="textcolorinfo">{{ $bundle->product }}</span> - {{ $bundle->quantity }}{{ $bundle->unit->name_u }} - {{ $bundle->price }}€</li>
+                        <li class="listdisplay">
+                            <div class="row">
+                                <div class="col-10">
+                                    <span class="textcolorinfo">{{ $bundle->product }}</span> - {{ $bundle->quantity }}{{ $bundle->unit->name_u }} - {{ $bundle->price }}€
+                                </div>
+                                <div class="col justify-content-end">
+                                    <button type="button" class="btn btn-sm btn-outline-dark mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal_{{$bundle->id}}"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <x-bootstrap.deleteModal>
+                            <x-slot:id>deleteModal_{{$bundle->id}}</x-slot>
+                            <x-slot:title>Retirer de votre panier : {{$bundle->product}} ?</x-slot>
+                            <x-slot:slot>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <form action="{{route('order.removeFromCart', $bundle->id)}}" method="get">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-primary mb-1">Oui</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-1">
+                                        <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Non</button>
+                                    </div>
+                                </div>
+                            </x-slot>
+                        </x-bootstrap>
                     @endforeach
                 </ul>
             </div>
