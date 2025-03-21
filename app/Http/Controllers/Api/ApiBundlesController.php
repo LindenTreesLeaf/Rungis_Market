@@ -30,7 +30,9 @@ class ApiBundlesController extends Controller {
                 //             ->get();
 
                 $data = Bundle::select("quantity","product","price","name_u","name","email","validated")
-                                ->where('bundles.order_id','=',$request->get("orderid"))
+                                ->join('bundle_order','bundles.id','=','bundle_order.bundle_id')
+                                ->join('orders',"orders.id","=","bundle_order.order_id")
+                                ->where('orders.id','=',$request->get("orderid"))
                                 ->join("units","units.id","=","bundles.unit_id")
                                 ->join("users","users.id", "=", "bundles.user_id")
                                 ->get();

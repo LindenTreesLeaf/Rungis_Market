@@ -17,7 +17,7 @@ class Order extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['date_passed', 'date_retrieve', 'state_id', 'user_id'];
+    protected $fillable = ['date_passed', 'date_retrieve', 'state_id', 'user_id','building_id'];
 
     public function user(){
         return $this->belongsTo(User::class);
