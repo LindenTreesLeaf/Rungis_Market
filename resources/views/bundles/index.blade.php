@@ -24,16 +24,57 @@
                             @endif
                         </div>
                         <div class="col">
-                            <!--Image ?-->
-                                <div class="flex-shrink-0">
-                                    @if($bundle->product == "Orchidées séchées") 
-                                    <img srcset="<?php echo asset('images/orchidees-sechees-150.png') ?> 150w,
-                                        <?php echo asset('images/orchidees-sechees-120.png') ?> 120w,
-                                        <?php echo asset('images/orchidees-sechees-100.png') ?> 100w"
-                                        sizes=" (max-width: 120px) 100px, 120px"
-                                        src="<?php echo asset('images/orchidees-sechees-120.png')?> "  title="Orchidées séchées" class="object-cover rounded-lg shadow w-32 h-32">
-                                    @endif
-                                </div>
+                            @php
+                                $productImages = [
+                                    "Pommes" => "pommes-120.png",
+                                    "Harricots verts" => "harricots-verts-120.png",
+                                    "Cerises" => "cerises-120.png",
+                                    "Brocolis" => "brocolis-120.png",
+                                    "Truffes entières" => "truffes-entieres-120.png",
+                                    "Igname" => "igname-120.png",
+                                    "Courgettes" => "courgettes-120.png",
+                                    "Courgettes rondes" => "courgettes-rondes-120.png",
+                                    "Aubergines" => "aubergines-120.png",
+                                    "Concombres" => "concombres-120.png",
+                                    "Pousse de Soja" => "pousse-de-soja-120.png",
+                                    "Sauté d'Agneau" => "saute-agneau-120.png",
+                                    "Souris d'Agneau" => "souris-agneau-120.png",
+                                    "Terrine Foie Gras mi-cuit" => "terrine-foie-gras-120.png",
+                                    "Manchon de Canard" => "manchon-canard-120.png",
+                                    "Jambon Cuit à la Truffe" => "jambon-truffe-120.png",
+                                    "Saucisson Sec Court d'Auvergne" => "saucisson-sec-120.png",
+                                    "Chute de Saumon Fumée" => "saumon-fume-120.png",
+                                    "Truite fumée tranché" => "truite-fumee-120.png",
+                                    "Bar Élevage" => "bar-elevage-120.png",
+                                    "Crevettes Rose Cuite" => "crevettes-120.png",
+                                    "Tentacules de Poulpe cuits" => "poulpe-120.png",
+                                    "Salade de Calamar à la niçoise" => "calamar-nicoise-120.png",
+                                    "Corail d'Oursin Pur" => "oursin-120.png",
+                                    "Lait de vache" => "lait-vache-120.png",
+                                    "Lait de brebis" => "lait-brebis-120.png",
+                                    "Tomme de Savoie" => "tomme-savoie-120.png",
+                                    "Brie à la truffe" => "brie-truffe-120.png",
+                                    "Saint Marcellin" => "saint-marcellin-120.png",
+                                    "Spaghetti" => "spaghetti-120.png",
+                                    "Cannelloni" => "cannelloni-120.png",
+                                    "Huile d'Olive Extra Vierge" => "huile-olive-120.png",
+                                    "Pain burger premium sésame" => "pain-burger-120.png",
+                                    "Tapenade Piment d'Espelette" => "tapenade-120.png",
+                                    "Roses rouges coupées" => "roses-rouges-120.png",
+                                    "Jonquilles en pot" => "jonquilles-120.png",
+                                    "Lys en bouquet" => "lys-120.png",
+                                    "Orchidées séchées" => "orchidees-sechees-120.png",
+                                    "Pensées en pot" => "pensees-120.png"
+                                ];
+                                $imageName = $productImages[$bundle->product] ?? 'default-120.png';
+                            @endphp
+                        <div style="text-align: right;">
+                            <img src="{{ asset('images/' . $imageName) }}" 
+                                alt="{{ $bundle->product }}" 
+                                style="width: 120px; height: auto; border-radius: 8px;">
+                        </div>
+
+                                   
                         </div>
                     </div>
                 </div>
