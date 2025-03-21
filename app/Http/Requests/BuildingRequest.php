@@ -25,6 +25,8 @@ class BuildingRequest extends FormRequest
             'name' => 'required|max:50',
             'sector_id' => 'required|exists:sectors,id',
             'type_id' => 'required|exists:types,id',
+            'latitude' => 'required|decimal:0,4',
+            'longitude' => 'required|decimal:0,4',
         ];
     }
 
@@ -39,6 +41,8 @@ class BuildingRequest extends FormRequest
             'name' => 'name',
             'sector_id' => 'sector_id',
             'type_id' => 'type_id',
+            'latitude' => 'latitude',
+            'longitude' => 'longitude',
         ];
     }
 

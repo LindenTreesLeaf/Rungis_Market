@@ -36,13 +36,14 @@ class ApiOrdersController extends Controller {
                     $data =  Order::select("*",DB::raw("orders.id as ordid"))
                             ->where('orders.user_id','=',$user->id)
                             ->join("states", "states.id","=", "orders.state_id")
+                            ->leftjoin("buildings","buildings.id","=","orders.building_id")
                             ->orderBy('date_passed','DESC')
                             ->get();
 
                     $out = ['error' => 0, 'data'=> $data, "role" => "client"];
 
                     
-                }else if($user->hasRole("seller")){
+                }else if($user->hasRole("seller")){ // a bouger dans le bundles controller
 
                     $data = Bundle::select("product","quantity","price","validated","name_u","name", "email","bundles.id as b_id")
                             ->where("bundles.user_id", "=", $user->id)
@@ -56,6 +57,7 @@ class ApiOrdersController extends Controller {
                 }else if($user->hasRole("supervisor")){
                     $data =  Order::select("*",DB::raw("orders.id as ordid"))
                             ->join("states", "states.id","=", "orders.state_id")
+                            ->leftjoin("buildings","buildings.id","=","orders.building_id")
                             ->orderBy('date_passed','DESC')
                             ->get();
          
@@ -84,7 +86,7 @@ class ApiOrdersController extends Controller {
 
     public function validateOrder(Request $request){
         
-        if($request->has('token') && $request->has("ordercode")){
+        if($request->has('token') && $request->has("ordercode") && $request->has("buildingid")){
             
 
             $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
@@ -112,7 +114,7 @@ class ApiOrdersController extends Controller {
 
 
                         $tmp = Order::where("orders.id", "=", $request->get("ordercode"))
-                                ->update(["state_id" => 3]);
+                                ->update(["state_id" => 3, "building_id" => $request->get("buildingid")]);
 
 
                         $out = ['error' => 0];

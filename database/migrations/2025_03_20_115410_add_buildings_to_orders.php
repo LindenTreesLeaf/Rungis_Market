@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->string('title', length: 100);
-            $table->string('message', length: 100);
-            $table->foreignId('order_id');
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('building_id')->nullable();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('building_id');  
+        });
     }
 };

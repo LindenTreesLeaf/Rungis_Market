@@ -37,6 +37,27 @@
         </div>
     </div>
 
+    <div class="mb-3 row">
+        <div class="col-3"><label for="latitude" class="form-label">Latitude :</label></div>
+        <div class="col-9"><input type="text" name="latitude" id="latitude" required class="form-control @error('latitude') is-invalid @enderror" placeholder="Entrez la latitude du batiment" value="{{ old('latitude', $building->latitude ?? '') }}" autofocus></div>
+        @error('latutude')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-3"><label for="longitude" class="form-label">Longitude :</label></div>
+        <div class="col-9"><input type="text" name="longitude" id="longitude" required class="form-control @error('longitude') is-invalid @enderror" placeholder="Entrez la latitude du batiment" value="{{ old('longitude', $building->longitude ?? '') }}" autofocus></div>
+        @error('latutude')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+
     <button type="submit" class="btn btn-success p-1">Confirmer</button>
     <a href="{{$routeRetour}}" class="btn btn-danger p-1">Annuler</a>
 </form>

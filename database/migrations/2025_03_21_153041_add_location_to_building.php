@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->string('title', length: 100);
-            $table->string('message', length: 100);
-            $table->foreignId('order_id');
-            $table->timestamps();
+        Schema::table('buildings', function (Blueprint $table) {
+            $table->float('latitude',precision:4);
+            $table->float('longitude',precision:4);
         });
     }
 
@@ -26,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::table('buildings', function (Blueprint $table) {
+            $table->dropColumn('latitude');
+            $table->dropColumn('longitude'); 
+        });
     }
 };

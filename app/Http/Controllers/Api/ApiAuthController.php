@@ -14,7 +14,7 @@ class ApiAuthController extends Controller {
 
 
     public function test(){
-        addNotification(User::get()[0],"coucou", "ceci est un super message");
+        addNotification(User::get()[4],"coucou", "ceci est un super message");
     }
 
     public function store(Request $request){
@@ -63,6 +63,8 @@ class ApiAuthController extends Controller {
                             ->get();
 
                 $out = ["error" => 0,"roles" => $roles];
+            }else{
+                $out = ["error" => 2];
             }
 
         }else{

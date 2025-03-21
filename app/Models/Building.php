@@ -19,7 +19,7 @@ class Building extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'sector_id', 'type_id'];
+    protected $fillable = ['name', 'sector_id', 'type_id','latitude','longitude'];
 
     public function type(){
         return $this->belongsTo(Type::class);
