@@ -17,6 +17,7 @@
                         <th scope="col"><span class="textcolorinfo">Statut</span></th>
                         <th scope="col"><span class="textcolorinfo">Date commande</span></th>
                         <th scope="col"><span class="textcolorinfo">Date récupération</span></th>
+                        <th scope="col"><span class="textcolorinfo">Lieu de récupération</span></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -31,6 +32,11 @@
                                 <td>{{ date('d/m/Y', strtotime($order->date_retrieve)) }}</td>
                             @else
                                 <td><span class="text-gray-500">N/A</span></td>
+                                <td><span class="text-gray-500">N/A</span></td>
+                            @endif
+                            @if(isset($order->building))
+                                <td>Bâtiment {{$order->building->name}}</td>
+                            @else
                                 <td><span class="text-gray-500">N/A</span></td>
                             @endif
                             @can('view', $order)

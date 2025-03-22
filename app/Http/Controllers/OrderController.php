@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Bundle;
+use App\Models\Building;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -95,6 +96,7 @@ class OrderController extends Controller
         $order->state_id = 2;
         $order->date_passed = date('Y-m-d');
         $order->date_retrieve = date('Y-m-d', mktime(0,0,0,date('m'), date('d')+7, date('Y')));
+        $order->building_id = Building::where('type_id', 3)->inRandomOrder()->first()->id;
         $order->save();
         return redirect()->route('orders.index')->with('message', "Commande commandée.");
     }

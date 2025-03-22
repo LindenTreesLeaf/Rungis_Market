@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\State;
+use App\Models\Building;
 use App\Models\Bundle;
 
 class Order extends Model
@@ -29,5 +30,9 @@ class Order extends Model
 
     public function state(){
         return $this->belongsTo(State::class);
+    }
+
+    public function building(){
+        return $this->belongsTo(building::class);
     }
 }
