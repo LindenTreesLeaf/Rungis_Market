@@ -29,6 +29,14 @@ class Bundle extends Model
         return $this->belongsToMany(Order::class);
     }
 
+    public function isReserved(){
+        foreach($this->orders as $order){
+            if($order->state_id == 2)
+                return True;
+        }
+        return False;
+    }
+
     public function unit(){
         return $this->belongsTo(Unit::class);
     }
