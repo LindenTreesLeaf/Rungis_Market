@@ -24,14 +24,12 @@ class OrderController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Order::class);
-        return view('orders.create');
+        //
     }
 
     public function store(Request $request)
     {
-        $order = Order::create($request->validated());
-        return redirect()->route('orders.show', ['order' => $order]);
+        //
     }
 
     public function show(string $id)
@@ -43,21 +41,17 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
-        $this->authorize('update', $order);
-        return view('orders.edit', compact('order'));
+       //
     }
 
     public function update(Request $request, Order $order)
     {
-        $order->update($request->validated());
-        return redirect()->route('orders.show', ['order' => $order]);
+        //
     }
 
     public function destroy(Order $order)
     {
-        $this->authorize('delete', $order);
-        $order->delete();
-        return redirect()->route('orders.index')->with('success', "Commande supprimée avec succès.");
+        //
     }
 
     public function addToCart(string $id){

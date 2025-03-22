@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-3"><strong class="textcolorinfo">Date de Commande : </strong></div>
                 @if($order->state->id != 1)
-                    <div class="col">{{ date('Y-m-d', strtotime($order->date_passed)) }}</div>
+                    <div class="col">{{ date('d/m/Y', strtotime($order->date_passed)) }}</div>
                 @else
                     <div class="col"><span class="text-gray-500">N/A</span></div>
                 @endif
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-3"><strong class="textcolorinfo">Date de Retrait : </strong></div>
                 @if($order->state->id != 1 && $order->state->id != 4)
-                    <div class="col">{{ date('Y-m-d', strtotime($order->date_retreive)) }}</div>
+                    <div class="col">{{ date('d/m/Y', strtotime($order->date_retrieve)) }}</div>
                 @else
                     <div class="col"><span class="text-gray-500">N/A</span></div>
                 @endif

@@ -37,7 +37,7 @@ Route::get('orders/addToCart/{bundle_id}', [OrderController::class, 'addToCart']
 Route::get('orders/removeFromCart/{bundle_id}', [OrderController::class, 'removeFromCart'])->name('order.removeFromCart');
 Route::get('orders/buy/{order_id}', [OrderController::class, 'buy'])->name('orders.buy');
 Route::get('orders/cancel/{order_id}', [OrderController::class, 'cancel'])->name('orders.cancel');
-Route::resource('orders', OrderController::class);
+Route::resource('orders', OrderController::class)->only('index', 'show');
 
 Route::post('/places/{building_id}', [PlaceController::class, 'store'])->name('places.store');
 Route::get('/place/{place_id}/reserve', [PlaceController::class, 'reserve'])->name('place.reserve');

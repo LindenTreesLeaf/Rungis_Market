@@ -68,13 +68,11 @@
                                 ];
                                 $imageName = $productImages[$bundle->product] ?? 'default-120.png';
                             @endphp
-                        <div style="text-align: right;">
-                            <img src="{{ asset('images/' . $imageName) }}" 
-                                alt="{{ $bundle->product }}" 
-                                style="width: 120px; height: auto; border-radius: 8px;">
-                        </div>
-
-                                   
+                            <div style="text-align: right;">
+                                <img src="{{ asset('images/' . $imageName) }}" 
+                                    alt="{{ $bundle->product }}" 
+                                    style="width: 120px; height: auto; border-radius: 8px;">
+                            </div>
                         </div>
                     </div>
                 </div>

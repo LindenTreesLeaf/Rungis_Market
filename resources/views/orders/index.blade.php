@@ -27,8 +27,8 @@
                             <td scope="row">{{ $order->id }}</td>
                             <td>{{ $order->state->name }}
                             @if($order->state->id == 2)
-                                <td>{{ date('Y-m-d', strtotime($order->date_passed)) }}</td>
-                                <td>{{ date('Y-m-d', strtotime($order->date_retreive)) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($order->date_passed)) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($order->date_retrieve)) }}</td>
                             @else
                                 <td><span class="text-gray-500">N/A</span></td>
                                 <td><span class="text-gray-500">N/A</span></td>
@@ -88,10 +88,10 @@
                             <td scope="row">{{ $order->id }}</td>
                             <td>{{ $order->state->name }}
                             @if($order->state->id == 3)
-                                <td>{{ date('Y-m-d', strtotime($order->date_passed)) }}</td>
-                                <td>{{ date('Y-m-d', strtotime($order->date_retreive)) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($order->date_passed)) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($order->date_retreive)) }}</td>
                             @else
-                                <td><span class="text-gray-500">{{ date('Y-m-d', strtotime($order->date_passed)) }}</span></td>
+                                <td><span class="text-gray-500">{{ date('d/m/Y', strtotime($order->date_passed)) }}</span></td>
                                 <td><span class="text-gray-500">N/A</span></td>
                             @endif
                             @can('view', $order)
