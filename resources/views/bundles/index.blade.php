@@ -55,6 +55,19 @@
     <x-slot name="title">Produits à retrouver sur le Marché</x-slot>
     <x-slot name="content">
         <div class="container mx-auto px-4 py-6">
+            <div class="row">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="collapse navbar-collapse">
+                        <form class="container-fluid justify-content-start">
+                            <a class="btn btn-small btn-outline-success" href="{{route('bundles.index', 1)}}">Fruits et Légumes</a>
+                            <a class="btn btn-small btn-outline-danger" href="{{route('bundles.index', 2)}}">Produits carnés</a>
+                            <a class="btn btn-small btn-outline-info" href="{{route('bundles.index', 3)}}">Marée</a>
+                            <a class="btn btn-small btn-outline-warning" href="{{route('bundles.index', 4)}}">Gastronomie</a>
+                            <a class="btn btn-small btn-outline-success" href="{{route('bundles.index', 5)}}">Horticulture</a>
+                        </form>
+                    </div>
+                </nav>
+            </div>
             @foreach($bundles as $bundle)
                 <div class="contentdisplay my-3">
                     <div class="row">
