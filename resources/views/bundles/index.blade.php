@@ -43,7 +43,7 @@
                                         <img srcset="<?php echo asset('images/products/' . $bundle->product . '-120.png'); ?> 120w,
                                             <?php echo asset('images/products/' . $bundle->product . '-150.png'); ?> 150w,"
                                             sizes="150px, 120px"
-                                            src="<?php echo asset('images/products/' . $bundle->product . '-120.png'); ?>" title={{$bundle->product}} class="img-fluid rounded-lg shadow-lg">
+                                            src="<?php echo asset('images/products/' . $bundle->product . '-150.png'); ?>" title={{$bundle->product}} class="img-fluid rounded-lg shadow-lg">
                                     @endif
                                 </div>
                             </div>
