@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\DB;
 if (!function_exists('addNotification')) {
 
-    function addNotification($user,$commandeId)
+    function addNotification($userId,$commandeId)
     {
 
         $title = "Commande prête";
 
-        $message = "La commande N° " + $commandeId + " est prête. Vous pouvez venir la récupérer.";
+        $message = "La commande N° " . $commandeId . " est prête. Vous pouvez venir la récupérer.";
 
-        DB::table("notifications")->insert(['title'=>$title, "message" =>$message,"user_id" => $user->id, "order_id" => $commandeId]);
+        DB::table("notifications")->insert(['title'=>$title, "message" =>$message,"user_id" => $userId, "order_id" => $commandeId]);
 
     }
 }

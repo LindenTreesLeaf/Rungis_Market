@@ -15,19 +15,17 @@ Route::middleware('api')->group(function () {
 
 
     Route::post('/api/orders', [ApiOrdersController::class,'getOrders']);
-    Route::post('api/orders/bundles',[ApiBundlesController::class, 'getOrdersBundles']);
-    Route::post('api/orders/update',[ApiOrdersController::class, 'validateOrder']);
-
-
-    Route::get('api/test', [ApiAuthController::class, "test"]);
+    Route::post('api/orders/bundles',[ApiOrdersController::class, 'getOrdersBundles']);
+    Route::post('api/orders/validate',[ApiOrdersController::class, 'validateOrder']);
+    Route::post('api/orders/ready',[ApiOrdersController::class,'setOrderReady']);
 
 
     Route::post('api/buildings', [ApiBuildingsController::class, 'getBuildings']);
 
 
 
-    Route::post('api/bundles/update',[ApiBundlesController::class, 'validateBundle']);
-    //Route::post('api/bundles',[ApiBundlesController::class]), 'getBundles']);
+    Route::post('api/bundles/validate',[ApiBundlesController::class, 'validateBundle']);
+    Route::post('api/bundles',[ApiBundlesController::class, 'getBundles']);
 
 
     Route::delete('api/notifications',[ApiNotificationsController::class,'deleteNotification']);

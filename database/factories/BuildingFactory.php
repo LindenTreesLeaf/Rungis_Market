@@ -22,8 +22,8 @@ class BuildingFactory extends Factory
         $name = (string)(fake()->randomElement($letters)).(string)(fake()->numberBetween(1,20));
         $sector = Sector::inRandomOrder()->first();
         $type = Type::inRandomOrder()->first();
-        $latitude = fake()->randomFloat(4,-90,90);
-        $longitude = fake() ->randomFloat(4,-180,180);
+        $latitude = fake()->randomFloat(4,48,49);
+        $longitude = fake() ->randomFloat(4,2,3);
         return [
             "name"=>$name,
             "sector_id"=>$sector->id,

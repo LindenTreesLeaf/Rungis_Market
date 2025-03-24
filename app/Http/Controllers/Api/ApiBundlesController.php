@@ -11,10 +11,8 @@ use App\Models\User;
 class ApiBundlesController extends Controller {
 
 
-    public function getOrdersBundles(Request $request){
-
-
-        if($request->has('token') && $request->has("orderid")){
+    public function getBundles(Request $request){
+        if($request->has('token')){
             
 
             $tokenExist = DB::table('personnal_access_token')->where("value_token","=", $request->get('token'))->get();
@@ -22,28 +20,24 @@ class ApiBundlesController extends Controller {
 
             if(count($tokenExist) == 1){
 
-                
-                // $data =  Order::select("*",DB::raw("orders.id as ordid"))
-                //             ->where('orders.user_id','=',$tokenExist[0]->user_id)
-                //             ->join("states", "states.id","=", "orders.state_id")
-                //             ->orderBy('date_passed','DESC')
-                //             ->get();
-
-                $data = Bundle::select("quantity","product","price","name_u","name","email","validated")
-                                ->join('bundle_order','bundles.id','=','bundle_order.bundle_id')
-                                ->join('orders',"orders.id","=","bundle_order.order_id")
-                                ->where('orders.id','=',$request->get("orderid"))
-                                ->join("units","units.id","=","bundles.unit_id")
-                                ->join("users","users.id", "=", "bundles.user_id")
-                                ->get();
+                $user = User::where('users.id', '=', $tokenExist[0]->user_id)
+                                ->get()[0];
 
 
+                if($user->hasRole("seller")){ 
 
-                $out = ['error' => 0, 'data'=> $data];
+                $data = Bundle::select("product","quantity","price","validated","name_u","name", "email","bundles.id as b_id")
+                            ->where("bundles.user_id", "=", $user->id)
+                            ->join("users", "users.id", "=", "bundles.user_id")
+                            ->join("units","units.id","=", "bundles.unit_id")
+                            ->get();
 
 
+                $out = ['error' => 0, 'data'=> $data, "role" => "seller"];
 
-
+                }else{
+                    $out = ["error" => 4];
+                }
 
             }else if(count($tokenExist) == 0){
                 $out = ['error' => 2];
@@ -56,7 +50,11 @@ class ApiBundlesController extends Controller {
         }
 
         return $out;
+
     }
+
+
+    
 
     public function validateBundle(Request $request){
         if($request->has('token') && $request->has("bundleid")){

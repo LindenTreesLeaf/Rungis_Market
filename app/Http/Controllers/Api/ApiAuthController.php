@@ -13,10 +13,6 @@ use App\Models\User;
 class ApiAuthController extends Controller {
 
 
-    public function test(){
-        addNotification(User::get()[4],"coucou", "ceci est un super message");
-    }
-
     public function store(Request $request){
 
 
