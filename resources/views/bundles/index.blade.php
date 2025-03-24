@@ -25,30 +25,32 @@
             </div>
             <div class="row">
                 @foreach($bundles as $bundle)
-                    <div class="col-6">
-                        <div class="contentdisplay my-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <p class="textcolorhighlight fs-4">{{ $bundle->product }}</p>
-                                    <p><srtong class="text-gray-500 mb-4">Quantité :</strong> {{ $bundle->quantity }} {{$bundle->unit->name_u}}</p>
-                                    <p><strong class="text-gray-500 mb-4">Prix :</strong> {{ number_format($bundle->price, 2) }} €</p>
-                                    @if($bundle->validated == 1 && !$bundle->isReserved())
-                                        <a href="{{route('order.addToCart', $bundle->id)}}" class="btn btn-primary btn-sm">Commander</a>
-                                    @else
-                                        <span class="btn btn-outline-dark btn-sm">Rutpture de stock</span>
-                                    @endif
-                                </div>
-                                <div class="col-4 justify-content-end">
-                                    @if(file_exists(public_path('images/products/' . $bundle->product . '-120.png')))
-                                        <img srcset="<?php echo asset('images/products/' . $bundle->product . '-120.png'); ?> 120w,
-                                            <?php echo asset('images/products/' . $bundle->product . '-150.png'); ?> 150w,"
-                                            sizes="150px, 120px"
-                                            src="<?php echo asset('images/products/' . $bundle->product . '-150.png'); ?>" title={{$bundle->product}} class="img-fluid rounded-lg shadow-lg">
-                                    @endif
+                    @if(!$bundle->isReserved())
+                        <div class="col-6">
+                            <div class="contentdisplay my-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p class="textcolorhighlight fs-4">{{ $bundle->product }}</p>
+                                        <p><srtong class="text-gray-500 mb-4">Quantité :</strong> {{ $bundle->quantity }} {{$bundle->unit->name_u}}</p>
+                                        <p><strong class="text-gray-500 mb-4">Prix :</strong> {{ number_format($bundle->price, 2) }} €</p>
+                                        @if($bundle->validated == 1)
+                                            <a href="{{route('order.addToCart', $bundle->id)}}" class="btn btn-primary btn-sm">Commander</a>
+                                        @else
+                                            <span class="btn btn-outline-dark btn-sm">Rutpture de stock</span>
+                                        @endif
+                                    </div>
+                                    <div class="col-4 justify-content-end">
+                                        @if(file_exists(public_path('images/products/' . $bundle->product . '-120.png')))
+                                            <img srcset="<?php echo asset('images/products/' . $bundle->product . '-120.png'); ?> 120w,
+                                                <?php echo asset('images/products/' . $bundle->product . '-150.png'); ?> 150w,"
+                                                sizes="150px, 120px"
+                                                src="<?php echo asset('images/products/' . $bundle->product . '-150.png'); ?>" title={{$bundle->product}} class="img-fluid rounded-lg shadow-lg">
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
             </div>
         </div>

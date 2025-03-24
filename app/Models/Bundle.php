@@ -37,6 +37,14 @@ class Bundle extends Model
         return False;
     }
 
+    public function isSold(){
+        foreach($this->orders as $order){
+            if($order->state_id == 3)
+                return True;
+        }
+        return False;
+    }
+
     public function unit(){
         return $this->belongsTo(Unit::class);
     }

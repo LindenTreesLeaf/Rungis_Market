@@ -32,6 +32,9 @@
                         @can('update', $bundle)
                             <a href="{{route('bundles.edit', $bundle->id)}}" class="btn btn-sm btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i></a>
                         @endcan
+                        @if($bundle->isSold())
+                            <span class="badge text-bg-primary">Vendu</span>
+                        @endif
                     </span>
                     <p><strong class="textcolorinfo">Quantité :</strong> {{ $bundle->quantity }} {{ $bundle->unit->name_u }}</p>
                     <p><strong class="textcolorinfo">Prix :</strong> {{ $bundle->price }}€</p>
