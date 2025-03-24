@@ -19,5 +19,39 @@ class BundleSeeder extends Seeder
         DB::table('bundles')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Bundle::factory()->count(50)->create();
+
+
+
+        Bundle::factory()->create([
+            "product"=>"Choucroute",
+            "quantity"=>10,
+            "price"=>50,
+            "validated"=>0,
+            "user_id"=>3,
+            "unit_id"=>1,
+            "sector_id"=>1,
+        ]);
+
+        Bundle::factory()->create([
+            "product"=>"Saucisse de Strasbourg",
+            "quantity"=>30,
+            "price"=>300,
+            "validated"=>0,
+            "user_id"=>3,
+            "unit_id"=>1,
+            "sector_id"=>1,
+        ]);
+
+        Bundle::factory()->create([
+            "product"=>"Escargot",
+            "quantity"=>20,
+            "price"=>10,
+            "validated"=>0,
+            "user_id"=>3,
+            "unit_id"=>1,
+            "sector_id"=>1,
+        ]);
+
+
     }
 }

@@ -26,5 +26,61 @@ class OrderSeeder extends Seeder
                 $bundle->orders()->attach($order->id);
             }
         }
+
+
+        $ord1 = Order::factory()->create([
+            'user_id' => 4,
+            "state_id"=>1,
+        ]);
+
+        $ord2 = Order::factory()->create([
+            'user_id' => 4,
+            "state_id"=>1,
+        ]);
+
+        $ord3 = Order::factory()->create([
+            'user_id' => 4,
+            "state_id"=>1,
+        ]);
+
+
+        for($i = 0 ; $i < 5 ; $i = $i + 1){
+
+            DB::table('bundle_order')->insertOrIgnore(
+                [
+                    'bundle_id' => Order::inRandomOrder()->first()->id,
+                    'order_id' => $ord1->id,
+                ]
+            );
+
+        }
+
+        for($i = 0 ; $i < 5 ; $i = $i + 1){
+
+            DB::table('bundle_order')->insertOrIgnore(
+                [
+                    'bundle_id' => Order::inRandomOrder()->first()->id,
+                    'order_id' => $ord2->id,
+                ]
+            );
+
+        }
+
+        for($i = 0 ; $i < 5 ; $i = $i + 1){
+
+            DB::table('bundle_order')->insertOrIgnore(
+                [
+                    'bundle_id' => Order::inRandomOrder()->first()->id,
+                    'order_id' => $ord3->id,
+                ]
+            );
+
+        }
+    
+       
+        
+
+
+
     }
 }

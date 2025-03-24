@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
             'email' => "t@t.t",
         ]);
         $test = User::where('name', '=', 'test')->first();
-        $test->assignRole(['client','seller','supervisor']);
+        $test->assignRole(['client','seller','supervisor','admin']);
 
 
         User::factory()->count(10)->create();
