@@ -33,6 +33,9 @@
                         @hasrole('client')
                             <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">Commandes</x-nav-link>
                         @endhasrole
+                        @can('viewAny', App\Models\Image::class)
+                            <x-nav-link :href="route('images_model.index')" :active="request()->routeIs('images.index')">Images</x-nav-link>
+                        @endcan
                     @endauth
                 </div>
             </div>
@@ -112,6 +115,9 @@
                 @hasrole('client')
                     <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">Commandes</x-responsive-nav-link>
                 @endhasrole
+                @can('viewAny', App\Models\Image::class)
+                    <x-responsive-nav-link :href="route('images_model.index')" :active="request()->routeIs('images.index')">Images</x-responsive-nav-link>
+                @endcan
             @endauth
         </div>
 

@@ -7,6 +7,7 @@ use App\Models\Bundle;
 use App\Models\Sector;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\Image;
 use App\Http\Requests\BundleRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -24,9 +25,10 @@ class BundleController extends Controller
 
     public function create()
     {
-
         $this->authorize('create', Bundle::class);
-        return view('bundles.create', ['sectors' => Sector::all(), 'units' => Unit::all()]);
+        //demande d'aide à ChatGPT pour cette ligne qui ne sélectionne qu'une image par description identique (d'où le selectRaw)
+        $images = Image::selectRaw('MIN(id) as id, description')->groupBy('description')->get();
+        return view('bundles.create', ['sectors' => Sector::all(), 'units' => Unit::all(), 'images' => $images]);
     }
 
     public function store(BundleRequest $request)
@@ -34,6 +36,15 @@ class BundleController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = Auth::user()->id;
         $bundle = Bundle::create($validated);
+        if($request->input('image_id') != -1){
+            $image = Image::findOrFail($request->input('image_id'));
+            $images = Image::where('description', $image->description)->get();
+            foreach($images as $i)
+                $bundle->images()->attach($i->id);   
+        }
+        else{
+            $bundle->images()->sync([]);
+        }
         return redirect()->route('bundles.show', Auth::user()->id);
     }
 
@@ -49,7 +60,8 @@ class BundleController extends Controller
     {
         $bundle = Bundle::findOrFail($id);
         $this->authorize('update', $bundle);
-        return view('bundles.edit', ['bundle' => $bundle, 'sectors' => Sector::all(), 'units' => Unit::all()]);
+        $images = Image::selectRaw('MIN(id) as id, description')->groupBy('description')->get();
+        return view('bundles.edit', ['bundle' => $bundle, 'sectors' => Sector::all(), 'units' => Unit::all(), 'images' => $images]);
     }
 
     public function update(BundleRequest $request, string $id)
@@ -64,6 +76,15 @@ class BundleController extends Controller
         else{
             $bundle->validated = 0;
             $bundle->save();
+        }
+        if($request->input('image_id') != -1){
+            $image = Image::findOrFail($request->input('image_id'));
+            $images = Image::where('description', $image->description)->get();
+            foreach($images as $i)
+                $bundle->images()->attach($i->id);   
+        }
+        else{
+            $bundle->images()->sync([]);
         }
         return redirect()->route('bundles.show', $bundle->user->id);
     }

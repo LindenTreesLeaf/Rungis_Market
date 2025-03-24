@@ -40,11 +40,11 @@
                                         @endif
                                     </div>
                                     <div class="col-4 justify-content-end">
-                                        @if(file_exists(public_path('images/products/' . $bundle->product . '-120.png')))
-                                            <img srcset="<?php echo asset('images/products/' . $bundle->product . '-120.png'); ?> 120w,
-                                                <?php echo asset('images/products/' . $bundle->product . '-150.png'); ?> 150w,"
+                                        @if(isset($bundle->images[0]) && isset($bundle->images[1]))
+                                            <img srcset="{{ asset($bundle->images[0]->url) }} 120w,
+                                                {{ asset($bundle->images[1]->url) }} 150w,"
                                                 sizes="150px, 120px"
-                                                src="<?php echo asset('images/products/' . $bundle->product . '-150.png'); ?>" title={{$bundle->product}} class="img-fluid rounded-lg shadow-lg">
+                                                src="{{ asset($bundle->images[1]->url) }}" title={{$bundle->product}} class="img-fluid rounded-lg shadow-lg">
                                         @endif
                                     </div>
                                 </div>

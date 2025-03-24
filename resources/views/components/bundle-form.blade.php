@@ -58,6 +58,18 @@
     </div>
 
     <div class="mb-3 row">
+        <div class="col-3"><label for="image_id" class="form-label">Image :</label></div>
+        <div class="col-9">
+            <select class="form-control" id="select_image" name="image_id">
+                <option value="-1">Sélectionnez une image</option>
+                @foreach($images as $image)
+                    <option value="{{$image->id}}" @if(isset($bundle) && isset($bundle->images[0]) && $bundle->images[0]->id == $image->id) selected @endif>{{$image->description}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
         <div class="row">Le produit est-il prêt à la vente ?</div>
         <div class="row">
             <div class="form-check form-check-inline">

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Unit;
 use App\Models\Sector;
+use App\Models\Image;
 
 class Bundle extends Model
 {
@@ -19,7 +20,7 @@ class Bundle extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['product', 'quantity', 'price', 'validated', 'user_id', 'unit_id', 'sector_id'];
+    protected $fillable = ['product', 'quantity', 'price', 'validated', 'user_id', 'unit_id', 'sector_id', 'image_id'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -51,5 +52,9 @@ class Bundle extends Model
 
     public function sector(){
         return $this->belongsTo(Sector::class);
+    }
+
+    public function images(){
+        return $this->belongsToMany(Image::class);
     }
 }

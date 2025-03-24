@@ -12,6 +12,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\SuperviseurController;
+use App\Http\Controllers\ImageController;
 
 Route::get('/', function () {
     return view('home');
@@ -32,6 +33,8 @@ Route::resource('conditions', ConditionController::class)->only('update');
 
 Route::get('/equipments/create/{building_id}', [EquipmentController::class, 'create'])->name('equipments.create');
 Route::resource('equipments', EquipmentController::class)->except('index', 'create');
+
+Route::resource('images_model', ImageController::class)->except('create', 'edit', 'show');
 
 Route::get('orders/addToCart/{bundle_id}', [OrderController::class, 'addToCart'])->name('order.addToCart');
 Route::get('orders/removeFromCart/{bundle_id}', [OrderController::class, 'removeFromCart'])->name('order.removeFromCart');

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             UnitSeeder::class,
             ConditionSeeder::class,
+            ImageSeeder::class,
             BundleSeeder::class,
             OrderSeeder::class,
             BuildingSeeder::class,
