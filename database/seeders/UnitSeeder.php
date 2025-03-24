@@ -29,5 +29,9 @@ class UnitSeeder extends Seeder
         DB::table('units')->insert([
             'name_u' => "L",
         ]);
+
+        DB::table('units')->insert([
+            'name_u' => "u",
+        ]);
     }
 }

@@ -35,6 +35,20 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::create('cards', function (Blueprint $table) {
+            $table->id();
+            $table->string("tier", length:50);
+            $table->timestamps();
+        });
+
+        Schema::create('card_user', function (Blueprint $table) {
+            $table->primary(['card_id', 'user_id']);
+            $table->date('start');
+            $table->date("end");
+            $table->foreignId('card_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        });
     }
 
     /**
@@ -42,8 +56,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        $table=dropForeign(['card_id', 'user_id']);
+        Schema::dropIfExists('card_user');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('cards');
     }
 };

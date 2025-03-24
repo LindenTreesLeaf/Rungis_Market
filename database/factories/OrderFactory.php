@@ -25,6 +25,7 @@ class OrderFactory extends Factory
             "date_retrieve"=>fake()->date(),
             "user_id"=>$user->id,
             "state_id"=>$state->id,
+            "building_id"=>null,
         ];
     }
 }

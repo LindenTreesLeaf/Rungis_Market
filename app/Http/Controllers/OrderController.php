@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Bundle;
+use App\Models\Building;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -24,14 +25,12 @@ class OrderController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Order::class);
-        return view('orders.create');
+        //
     }
 
     public function store(Request $request)
     {
-        $order = Order::create($request->validated());
-        return redirect()->route('orders.show', ['order' => $order]);
+        //
     }
 
     public function show(string $id)
@@ -43,21 +42,17 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
-        $this->authorize('update', $order);
-        return view('orders.edit', compact('order'));
+       //
     }
 
     public function update(Request $request, Order $order)
     {
-        $order->update($request->validated());
-        return redirect()->route('orders.show', ['order' => $order]);
+        //
     }
 
     public function destroy(Order $order)
     {
-        $this->authorize('delete', $order);
-        $order->delete();
-        return redirect()->route('orders.index')->with('success', "Commande supprimée avec succès.");
+        //
     }
 
     public function addToCart(string $id){
@@ -101,6 +96,7 @@ class OrderController extends Controller
         $order->state_id = 2;
         $order->date_passed = date('Y-m-d');
         $order->date_retrieve = date('Y-m-d', mktime(0,0,0,date('m'), date('d')+7, date('Y')));
+        $order->building_id = Building::where('type_id', 3)->inRandomOrder()->first()->id;
         $order->save();
         return redirect()->route('orders.index')->with('message', "Commande commandée.");
     }

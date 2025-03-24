@@ -100,6 +100,19 @@
             <x-responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
                 {{ __('Nous contacter') }}
             </x-responsive-nav-link>
+            @auth
+                <x-responsive-nav-link :href="route('cards.index')" :active="request()->routeIs('cards.index')">Abonnements</x-responsive-nav-link>
+                @can('viewAny', App\Models\Building::class)
+                    <x-responsive-nav-link :href="route('buildings.index')" :active="request()->routeIs('buildings.index')">Bâtiments</x-responsive-nav-link>
+                @endcan
+                @hasrole('seller')
+                    <x-responsive-nav-link :href="route('places.index')" :active="request()->routeIs('places.index')">Réservations</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('bundles.show', Auth::user()->id)" :active="request()->routeIs('bundles.show')">Ventes</x-responsive-nav-link>
+                @endhasrole
+                @hasrole('client')
+                    <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">Commandes</x-responsive-nav-link>
+                @endhasrole
+            @endauth
         </div>
 
         <!-- Options du menu utilisateur -->

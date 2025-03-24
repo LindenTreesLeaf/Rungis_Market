@@ -8,6 +8,7 @@ use App\Models\Sector;
 use App\Models\Type;
 use App\Models\Place;
 use App\Models\Equipment;
+use App\Models\Order;
 
 class Building extends Model
 {
@@ -39,5 +40,9 @@ class Building extends Model
 
     public function equipments(){
         return $this->hasMany(Equipment::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Orders::class);
     }
 }
