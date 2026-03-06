@@ -36,6 +36,6 @@ Différents utilisateurs de tests ont été ajouté grâce aux seeders, avec com
 - tous les rôles : nom='test', email='t@t.t'
 ## Licence
 
-Ce projet a été réalisé en collaboration avec [OYANI Muzhgan], [KINA Maria], et [TURQUIN Roméo].
+Ce projet a été réalisé en collaboration avec _OYANI Muzhgan_, _KINA Maria_, et _TURQUIN Roméo_.
 
 Le code est mis à disposition pour **consultation et test local uniquement**. Toute reproduction ou utilisation commerciale est interdite sans notre accord préalable. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
