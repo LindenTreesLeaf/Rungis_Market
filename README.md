@@ -6,6 +6,7 @@ Réalisation d'un site web avec une application mobile sur le modèle du site we
 - université : URCA - UFR Sciences Exactes et Naturelles
 - professeur référent : RABAT Cyril
 - identifiant de la matière : info0406
+
 Seule l'application web est présente dans le dépôt car je n'ai travaillé que sur cette partie. Pour une description complète du projet, un compte-rendu est présent dans le dossier 'doc' avec MDL, MCD, et digrammes de navigation et de cas d'utilisations.
 ## Installation
 __Prérequis__
